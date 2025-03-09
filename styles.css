@@ -1,4 +1,4 @@
-/* General St/* General Styling */
+/* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff758c, #ff7eb3);
@@ -8,20 +8,19 @@ body {
     padding: 0;
 }
 
-/* Main Form Container */
+/* Main Container */
 .container {
-    max-width: 600px;
-    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
-    background: white;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    text-align: center;
 }
 
 /* Love Letter Box */
 .letter-container {
-    width: 80%;
+    width: 60%;
     max-width: 600px;
     background: white;
     color: black;
@@ -38,7 +37,7 @@ body {
     animation: heartbeat 1.5s infinite;
 }
 
-/* Text Styling */
+/* Letter Text */
 .letter-text {
     font-size: 24px;
     font-weight: bold;
@@ -48,32 +47,6 @@ body {
 .letter-message {
     font-size: 18px;
     line-height: 1.5;
-}
-
-/* Form Labels */
-label {
-    font-size: 18px;
-    font-weight: bold;
-    display: block;
-    margin-top: 15px;
-    text-align: left;
-}
-
-/* Form Inputs */
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
-    border: 2px solid #ff4b2b;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-/* Textarea */
-textarea {
-    height: 120px;
-    resize: none;
 }
 
 /* Buttons */
@@ -94,22 +67,73 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Get Started Button */
-button.get-started {
+/* Recipient Form Styling */
+.recipient-form {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    text-align: left;
+    animation: fadeIn 1s ease-in;
+}
+
+/* Form Labels */
+.recipient-form label {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Form Inputs */
+.recipient-form input,
+.recipient-form textarea {
     width: 100%;
     padding: 12px;
-    font-size: 20px;
-    background: #ff4b2b;
+    margin-bottom: 15px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.recipient-form textarea {
+    height: 120px;
+    resize: none;
+}
+
+/* Get Started Button */
+.get-started {
+    display: inline-block;
+    padding: 15px 40px;
+    font-size: 22px;
+    font-weight: bold;
     color: white;
+    background: #ff4b2b;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: 0.3s;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    animation: pulse 1.5s infinite;
+    position: relative;
+    text-align: center;
 }
 
-button.get-started:hover {
+.get-started:hover {
+    transform: scale(1.1);
     background: #e63950;
-    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 75, 43, 0.8);
+}
+
+/* Responsive Fix */
+@media screen and (max-width: 768px) {
+    .recipient-form {
+        width: 95%;
+    }
 }
 
 /* Animations */
@@ -123,3 +147,8 @@ button.get-started:hover {
     50% { transform: scale(1.2); }
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
