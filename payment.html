@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Payment</title>
+    <title>Payment</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,36 +18,57 @@
             <p><strong>QR Code:</strong> (Scan below)</p>
             <img src="qr-code.png" alt="QR Code" class="qr-code">
         </div>
-        
-        <!-- Form with Formspree integration -->
-        <form action="https://formspree.io/f/mldjrypw" method="POST" class="payment-form">
+
+        <!-- Form to collect data -->
+        <form id="paymentForm" action="https://formspree.io/f/mldjrypw" method="POST" enctype="multipart/form-data">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
-            
+
             <label for="txn-id">Transaction ID:</label>
             <input type="text" id="txn-id" name="txn_id" required>
-            
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone" required>
-            
+
             <label for="screenshot">Upload Payment Screenshot:</label>
             <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
-            
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Your Phone:</label>
+            <input type="text" id="phone" name="phone" required>
+
             <button type="submit" class="submit-btn">Submit Payment</button>
         </form>
+
+        <!-- Success message display after form submission -->
+        <div id="successMessage" style="display:none;">
+            <h3>We will verify your payment and then send your personalized love letter to your contact details (email/phone) within 2 hours.</h3>
+            <p>If you have any queries, feel free to contact us at <a href="mailto:ayushrai7533@gmail.com">ayushrai7533@gmail.com</a>.</p>
+            <a href="index.html" class="btn">Go to Homepage</a>
+        </div>
     </div>
 
     <script>
-        // Copy UPI ID to clipboard
+        // Function to copy UPI ID
         function copyUPI() {
             const upiText = document.getElementById("upi-id").innerText;
             navigator.clipboard.writeText(upiText).then(() => {
                 alert("UPI ID copied to clipboard!");
             });
         }
+
+        // Handle the form submission
+        document.getElementById("paymentForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission to show success message
+
+            // Hide the form
+            document.getElementById("paymentForm").style.display = "none";
+
+            // Show the success message
+            document.getElementById("successMessage").style.display = "block";
+
+            // Optionally, submit the form to Formspree (Formspree will send the email)
+            this.submit();
+        });
     </script>
 </body>
 </html>
