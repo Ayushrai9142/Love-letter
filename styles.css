@@ -190,3 +190,37 @@ button:hover {
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+/* Red star for required fields */
+.required-star {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Recipient Name Input Styling */
+.recipient-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.recipient-input input {
+    flex-grow: 1;
+    padding-right: 100px; /* Space for "Optional" text */
+}
+
+.recipient-input .custom-label {
+    background: #ff4b2b;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Placeholder inside input field */
+.recipient-input input::placeholder {
+    font-style: italic;
+}
+
