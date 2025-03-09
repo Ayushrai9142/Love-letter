@@ -14,11 +14,15 @@
         </p>
 
         <form id="recipientForm">
-            <label for="yourName">Your Name:</label>
-            <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+            <label for="yourName">Your Name: <span class="required-star">*</span></label>
+<input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
 
-            <label for="recipientName">Recipient's Name (Optional):</label>
-            <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+<label for="recipientName">Recipient's Name:</label>
+<div class="recipient-input">
+    <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name (Optional)">
+    <span class="custom-label">Custom</span>
+</div>
+
 
             <label for="customMessage">Custom Message (Optional):</label>
             <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
