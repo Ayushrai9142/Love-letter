@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <script>
-        // ✅ Step 2: Check if user is logged in
+        // Check if user is logged in
         if (!localStorage.getItem("isLoggedIn")) {
             window.location.href = "login.html"; // Redirect to login page
         }
@@ -16,21 +16,17 @@
 </head>
 <body>
     <header>
-        <h1>💌 Send a Love Letter 💌</h1>
-        <p>Express your love with a beautifully crafted letter</p>
-        <button onclick="location.href='login.html'">Get Started</button>
+        <h1>💌 A Special Letter for Your Loved One 💌</h1>
     </header>
 
-    <div class="love-emoji">❤️</div>
+    <div class="love-text">
+        <p>Love is the most beautiful feeling in the world. It is the silent whisper in the wind, the warmth of the morning sun, and the twinkle in the stars at night.</p>
+        <p>Expressing love is an art, and we help you create the perfect love letter for your special one. Every word you choose, every emotion you express, will be woven into a heartfelt message that will make their heart melt.</p>
+        <p>Whether it’s a simple "I love you" or a deeply emotional confession, we make sure your words touch the soul of your loved one.</p>
+        <p>Let your heart speak through words, and make them feel truly special.</p>
+        <p>Your love story deserves to be written beautifully.</p>
+    </div>
 
-    <!-- ✅ Logout Button -->
-    <button onclick="logout()">Logout</button>
-
-    <script>
-        function logout() {
-            localStorage.removeItem("isLoggedIn"); // Remove login status
-            window.location.href = "login.html"; // Redirect to login page
-        }
-    </script>
+    <button class="get-started" onclick="location.href='recipient.html'">Get Started</button>
 </body>
 </html>
