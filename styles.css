@@ -240,4 +240,10 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
+/* QR code ke liye specific styling */
+.qr-code {
+    width: 150px; /* Yahan aap apne desired size ko set kar sakte hain */
+    height: 150px; /* Yahan bhi aap same size set kar sakte hain */
+}
+
  
