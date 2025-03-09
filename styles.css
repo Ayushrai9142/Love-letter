@@ -235,8 +235,8 @@ button:hover {
 }
 
 .qr-code{
-    width: 100px; /* Size adjust karna */
-    height: 100px;
+    width: 200px; /* Size adjust karna */
+    height: 150px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
