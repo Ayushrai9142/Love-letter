@@ -1,26 +1,21 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
+    <title>Payment Instructions</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h2>Complete Your Payment</h2>
-        <p>Please send the payment using the details below and submit the transaction details.</p>
+        <p>Please make the payment using the following details:</p>
+        <p><strong>UPI ID:</strong> 9555829232@ybl</p>
+        <p><strong>Bank Account:</strong> 1234567890 (SBI)</p>
+        <p><strong>QR Code:</strong> Scan below to pay.</p>
+        <img src="qr-code.png" alt="QR Code" class="qr-code">
         
-        <div class="payment-info">
-            <h3>Payment Details</h3>
-            <p><strong>UPI ID:</strong> <span id="upi-id">9555829232@ybl</span> <button onclick="copyUPI()">Copy</button></p>
-            <p><strong>Bank Account:</strong> 1234567890 (SBI)</p>
-            <p><strong>QR Code:</strong> (Scan below)</p>
-            <img src="qr-code.png" alt="QR Code" class="qr-code">
-        </div>
-
-        <!-- Form to collect data -->
-        <form id="paymentForm" action="https://formspree.io/f/mldjrypw" method="POST" enctype="multipart/form-data">
+        <h3>Once done, submit the payment details:</h3>
+        <form action="submit_payment.php" method="POST" enctype="multipart/form-data">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -33,42 +28,11 @@
             <label for="email">Your Email:</label>
             <input type="email" id="email" name="email" required>
 
-            <label for="phone">Your Phone:</label>
+            <label for="phone">Your Phone Number:</label>
             <input type="text" id="phone" name="phone" required>
 
-            <button type="submit" class="submit-btn">Submit Payment</button>
+            <button type="submit" class="submit-btn">Submit Payment Details</button>
         </form>
-
-        <!-- Success message display after form submission -->
-        <div id="successMessage" style="display:none;">
-            <h3>We will verify your payment and then send your personalized love letter to your contact details (email/phone) within 2 hours.</h3>
-            <p>If you have any queries, feel free to contact us at <a href="mailto:ayushrai7533@gmail.com">ayushrai7533@gmail.com</a>.</p>
-            <a href="index.html" class="btn">Go to Homepage</a>
-        </div>
     </div>
-
-    <script>
-        // Function to copy UPI ID
-        function copyUPI() {
-            const upiText = document.getElementById("upi-id").innerText;
-            navigator.clipboard.writeText(upiText).then(() => {
-                alert("UPI ID copied to clipboard!");
-            });
-        }
-
-        // Handle the form submission
-        document.getElementById("paymentForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form submission to show success message
-
-            // Hide the form
-            document.getElementById("paymentForm").style.display = "none";
-
-            // Show the success message
-            document.getElementById("successMessage").style.display = "block";
-
-            // Optionally, submit the form to Formspree (Formspree will send the email)
-            this.submit();
-        });
-    </script>
 </body>
 </html>
