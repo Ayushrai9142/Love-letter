@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipient Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💖 Customize Your Love Letter 💖</h1>
+        <p class="love-text">
+            Fill in the details below to create a special love letter. You can add a recipient's name and a personal message (both are optional). 
+        </p>
+
+        <form id="recipientForm">
+            <label for="yourName">Your Name:</label>
+            <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+
+            <label for="recipientName">Recipient's Name (Optional):</label>
+            <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+
+            <label for="customMessage">Custom Message (Optional):</label>
+            <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
+
+            <button type="submit" class="get-started">Next</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("recipientForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Save details to localStorage (for now)
+            localStorage.setItem("yourName", document.getElementById("yourName").value);
+            localStorage.setItem("recipientName", document.getElementById("recipientName").value);
+            localStorage.setItem("customMessage", document.getElementById("customMessage").value);
+
+            // Redirect to payment (or next step)
+            window.location.href = "payment.html"; 
+        });
+    </script>
+</body>
+</html>
