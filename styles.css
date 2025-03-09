@@ -1,4 +1,4 @@
-/* General Styles */
+/* General St/* General Styling */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff758c, #ff7eb3);
@@ -8,18 +8,20 @@ body {
     padding: 0;
 }
 
-/* Container for Center Alignment */
+/* Main Form Container */
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
 }
 
 /* Love Letter Box */
 .letter-container {
-    width: 60%;
+    width: 80%;
     max-width: 600px;
     background: white;
     color: black;
@@ -30,11 +32,13 @@ body {
     animation: fadeIn 1.5s ease-in;
 }
 
+/* Heart Animation */
 .heart {
     font-size: 50px;
     animation: heartbeat 1.5s infinite;
 }
 
+/* Text Styling */
 .letter-text {
     font-size: 24px;
     font-weight: bold;
@@ -44,6 +48,32 @@ body {
 .letter-message {
     font-size: 18px;
     line-height: 1.5;
+}
+
+/* Form Labels */
+label {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+}
+
+/* Form Inputs */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Textarea */
+textarea {
+    height: 120px;
+    resize: none;
 }
 
 /* Buttons */
@@ -64,116 +94,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-.love-text {
-    max-width: 800px;
-    margin: auto;
-    font-size: 22px;
-    color: #333;
-    line-height: 1.6;
-    font-weight: 300;
-}
-
-form {
-    max-width: 600px;
-    margin: auto;
-    text-align: left;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    font-size: 18px;
-    font-weight: bold;
-    display: block;
-    margin-top: 15px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-textarea {
-    height: 120px;
-    resize: none;
-}
-
-.get-started {
-    display: inline-block;
-    padding: 15px 40px;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
-    background: #ff4b2b;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-    animation: pulse 1.5s infinite;
-    position: relative;
-    text-align: center;
-}
-
-.get-started:hover {
-    transform: scale(1.1);
-    background: #e63950;
-    box-shadow: 0 0 15px rgba(255, 75, 43, 0.8);
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    text-align: center;
-}
-
-label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 2px solid #ff4b2b;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-textarea {
-    height: 120px;
-    resize: none;
-}
-
+/* Get Started Button */
 button.get-started {
     width: 100%;
     padding: 12px;
@@ -190,3 +111,15 @@ button.get-started:hover {
     background: #e63950;
     transform: scale(1.05);
 }
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
