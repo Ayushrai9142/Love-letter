@@ -19,17 +19,21 @@
             <img src="qr-code.png" alt="QR Code" class="qr-code">
         </div>
         
-        <form id="paymentForm" class="payment-form">
+        <!-- Form updated with Formspree action and redirect -->
+        <form id="paymentForm" class="payment-form" action="https://formspree.io/f/mldjrypw" method="POST">
             <label for="name">Your Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="yourName" required>
             
             <label for="txn-id">Transaction ID:</label>
-            <input type="text" id="txn-id" name="txn_id" required>
+            <input type="text" id="txn-id" name="transactionId" required>
             
             <label for="screenshot">Upload Payment Screenshot:</label>
             <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
             
-            <button type="button" class="submit-btn" onclick="confirmPayment()">Submit Payment</button>
+            <!-- Hidden field to redirect to confirmation page -->
+            <input type="hidden" name="_next" value="confirmation.html">
+            
+            <button type="submit" class="submit-btn">Submit Payment</button>
         </form>
     </div>
 
@@ -39,11 +43,6 @@
             navigator.clipboard.writeText(upiText).then(() => {
                 alert("UPI ID copied to clipboard!");
             });
-        }
-
-        function confirmPayment() {
-            alert("Payment details submitted! We will verify and get back to you.");
-            window.location.href = "confirmation.html"; // Redirect to a confirmation page
         }
     </script>
 </body>
