@@ -1,0 +1,13 @@
+{
+  "name": "love-letter-project",
+  "version": "1.0.0",
+  "description": "Love Letter Payment Verification",
+  "main": "index.js",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  },
+  "scripts": {
+    "start": "node functions/paymentHandler.js"
+  },
+  "license": "MIT"
+}
