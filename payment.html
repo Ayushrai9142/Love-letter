@@ -41,22 +41,12 @@
         document.getElementById("paymentForm").addEventListener("submit", async function(event) {
             event.preventDefault();  // Prevent default form submission
 
-            const formData = new FormData(this);
-            const data = {
-                name: formData.get('name'),
-                txn_id: formData.get('txn-id'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                screenshot: formData.get('screenshot') // Handle this separately in backend
-            };
+            const formData = new FormData(this); // FormData object to handle file uploads
 
             try {
-                const response = await fetch("/api/paymentHandler", {
+                const response = await fetch("/.netlify/functions/paymentHandler", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
+                    body: formData,  // Send formData instead of JSON
                 });
 
                 const result = await response.json();
