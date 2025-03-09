@@ -13,13 +13,13 @@
         
         <div class="payment-info">
             <h3>Payment Details</h3>
-            <p><strong>UPI ID:</strong> 9555829232@ybl</p>
+            <p><strong>UPI ID:</strong> <span id="upi-id">9555829232@ybl</span> <button onclick="copyUPI()">Copy</button></p>
             <p><strong>Bank Account:</strong> 1234567890 (ABC Bank)</p>
             <p><strong>QR Code:</strong> (Scan below)</p>
             <img src="qr-code.png" alt="QR Code" class="qr-code">
         </div>
         
-        <form action="submit_payment.php" method="POST" enctype="multipart/form-data" class="payment-form">
+        <form id="paymentForm" class="payment-form">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
             
@@ -29,8 +29,22 @@
             <label for="screenshot">Upload Payment Screenshot:</label>
             <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
             
-            <button type="submit" class="submit-btn">Submit Payment</button>
+            <button type="button" class="submit-btn" onclick="confirmPayment()">Submit Payment</button>
         </form>
     </div>
+
+    <script>
+        function copyUPI() {
+            const upiText = document.getElementById("upi-id").innerText;
+            navigator.clipboard.writeText(upiText).then(() => {
+                alert("UPI ID copied to clipboard!");
+            });
+        }
+
+        function confirmPayment() {
+            alert("Payment details submitted! We will verify and get back to you.");
+            window.location.href = "confirmation.html"; // Redirect to a confirmation page
+        }
+    </script>
 </body>
 </html>
