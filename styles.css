@@ -89,16 +89,54 @@ button:hover {
 }
 
 /* Form Inputs */
-.recipient-form input,
-.recipient-form textarea {
+/* 🔹 Fixing Recipient Name Input & Custom Button Layout */
+.recipient-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+    flex-wrap: wrap; /* Makes it mobile-friendly */
     width: 100%;
+}
+
+/* 🔹 Input Field */
+.recipient-name-container input {
+    flex: 1; /* Input takes up available space */
+    min-width: 60%;
     padding: 12px;
-    margin-bottom: 15px;
     border: 2px solid #ff4b2b;
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
 }
+
+/* 🔹 Custom Button */
+.custom-btn {
+    background: #ff4b2b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-btn:hover {
+    background: #e63950;
+}
+
+/* 🔹 Mobile Responsive Fix */
+@media screen and (max-width: 768px) {
+    .recipient-name-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .recipient-name-container input {
+        width: 100%;
+    }
+}
+
 
 .recipient-form textarea {
     height: 120px;
