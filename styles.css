@@ -74,3 +74,61 @@ button:hover {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
+.love-text {
+    max-width: 800px;
+    margin: auto;
+    font-size: 22px;
+    color: #333;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+form {
+    max-width: 600px;
+    margin: auto;
+    text-align: left;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    height: 120px;
+    resize: none;
+}
+
+.get-started {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff4d6d;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.get-started:hover {
+    background-color: #e63950;
+}
+
