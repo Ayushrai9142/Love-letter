@@ -6,13 +6,13 @@
     <title>Love Letter Service</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script>
-    // Check if user is logged in
-    if (!localStorage.getItem("isLoggedIn")) {
-        window.location.href = "login.html"; // Redirect to login page
-    }
-</script>
 
+    <script>
+        // ✅ Step 2: Check if user is logged in
+        if (!localStorage.getItem("isLoggedIn")) {
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -22,5 +22,15 @@
     </header>
 
     <div class="love-emoji">❤️</div>
+
+    <!-- ✅ Logout Button -->
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        function logout() {
+            localStorage.removeItem("isLoggedIn"); // Remove login status
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
 </body>
 </html>
