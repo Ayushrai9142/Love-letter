@@ -210,14 +210,31 @@ button:hover {
     padding-right: 100px; /* Space for "Optional" text */
 }
 
-.recipient-input .custom-label {
-    background: #ff4b2b;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
+.recipient-input {
+    position: relative;
+    width: 100%;
 }
+
+.recipient-input input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.recipient-input::after {
+    content: "(Optional)";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: gray;
+    font-style: italic;
+}
+
 
 /* Placeholder inside input field */
 .recipient-input input::placeholder {
