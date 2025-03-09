@@ -131,4 +131,31 @@ textarea {
 .get-started:hover {
     background-color: #e63950;
 }
+.get-started {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    animation: pulse 1.5s infinite;
+}
+
+.get-started:hover {
+    transform: scale(1.1);
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    box-shadow: 0 0 20px rgba(255, 75, 43, 0.8);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 
