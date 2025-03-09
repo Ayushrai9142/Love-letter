@@ -1,4 +1,4 @@
-/* General Styles */
+/* General Styles */ 
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff758c, #ff7eb3);
@@ -137,7 +137,6 @@ button:hover {
     }
 }
 
-
 .recipient-form textarea {
     height: 120px;
     resize: none;
@@ -203,15 +202,6 @@ button:hover {
     align-items: center;
     gap: 10px;
     position: relative;
-}
-
-.recipient-input input {
-    flex-grow: 1;
-    padding-right: 100px; /* Space for "Optional" text */
-}
-
-.recipient-input {
-    position: relative;
     width: 100%;
 }
 
@@ -235,9 +225,8 @@ button:hover {
     font-style: italic;
 }
 
-
 /* Placeholder inside input field */
 .recipient-input input::placeholder {
     font-style: italic;
 }
-
+   
