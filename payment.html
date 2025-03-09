@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
+    <title>Complete Payment</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,25 +19,29 @@
             <img src="qr-code.png" alt="QR Code" class="qr-code">
         </div>
         
-        <!-- Form updated with Formspree action and redirect -->
-        <form id="paymentForm" class="payment-form" action="https://formspree.io/f/mldjrypw" method="POST">
+        <!-- Form with Formspree integration -->
+        <form action="https://formspree.io/f/mldjrypw" method="POST" class="payment-form">
             <label for="name">Your Name:</label>
-            <input type="text" id="name" name="yourName" required>
+            <input type="text" id="name" name="name" required>
             
             <label for="txn-id">Transaction ID:</label>
-            <input type="text" id="txn-id" name="transactionId" required>
+            <input type="text" id="txn-id" name="txn_id" required>
+            
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
             
             <label for="screenshot">Upload Payment Screenshot:</label>
             <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
-            
-            <!-- Hidden field to redirect to confirmation page -->
-            <input type="hidden" name="_next" value="confirmation.html">
             
             <button type="submit" class="submit-btn">Submit Payment</button>
         </form>
     </div>
 
     <script>
+        // Copy UPI ID to clipboard
         function copyUPI() {
             const upiText = document.getElementById("upi-id").innerText;
             navigator.clipboard.writeText(upiText).then(() => {
