@@ -229,4 +229,15 @@ button:hover {
 .recipient-input input::placeholder {
     font-style: italic;
 }
-   
+  .qr-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qr-image {
+    width: 200px; /* Size adjust karna */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+ 
