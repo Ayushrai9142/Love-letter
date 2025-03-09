@@ -18,7 +18,7 @@ exports.handler = async function(event) {
             service: "gmail",
             auth: {
                 user: "ayushrai7533@gmail.com",  // ✅ Apna email yahan dalna
-                pass: "0nUlK7p0%uau-4Aq",  // ❌ Real password mat likho, "App Password" generate karo
+                pass: "ztgw qcow wjhk wwcv",  // ❌ Real password mat likho, "App Password" generate karo
             },
         });
 
