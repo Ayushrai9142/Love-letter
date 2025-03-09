@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +16,7 @@
         <img src="qr-code.png" alt="QR Code" class="qr-code">
         
         <h3>Once done, submit the payment details:</h3>
-        <form action="submit_payment.php" method="POST" enctype="multipart/form-data">
+        <form id="paymentForm" class="payment-form">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -31,8 +32,46 @@
             <label for="phone">Your Phone Number:</label>
             <input type="text" id="phone" name="phone" required>
 
-            <button type="submit" class="submit-btn">Submit Payment Details</button>
+            <button type="button" class="submit-btn" onclick="submitPayment()">Submit Payment Details</button>
         </form>
     </div>
+
+    <script>
+        // Submit the form data using Fetch API to Netlify function
+        async function submitPayment() {
+            const name = document.getElementById("name").value;
+            const txn_id = document.getElementById("txn-id").value;
+            const screenshot = document.getElementById("screenshot").files[0];
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+
+            // Create FormData object
+            let formData = new FormData();
+            formData.append("name", name);
+            formData.append("txn_id", txn_id);
+            formData.append("screenshot", screenshot);
+            formData.append("email", email);
+            formData.append("phone", phone);
+
+            // Send data to Netlify function (paymentHandler)
+            try {
+                const response = await fetch("/.netlify/functions/paymentHandler", {
+                    method: "POST",
+                    body: formData,
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Show success message and redirect to confirmation page
+                    alert("We will verify your payment and send your personalized love letter soon.");
+                    window.location.href = "confirmation.html"; // Redirect to confirmation page
+                } else {
+                    alert("Failed to submit payment details. Please try again.");
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+    </script>
 </body>
 </html>
