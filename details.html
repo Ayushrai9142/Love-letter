@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Your Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Enter Your Details</h2>
+    <form id="detailsForm">
+        <input type="text" id="userName" placeholder="Your Name" required>
+        <input type="text" id="recipientName" placeholder="Recipient's Name (Optional)">
+        <textarea id="loveMessage" placeholder="Your Love Message (Optional)"></textarea>
+        <button type="submit">Proceed</button>
+    </form>
+
+    <script>
+        document.getElementById('detailsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const userName = document.getElementById('userName').value.trim();
+            const recipientName = document.getElementById('recipientName').value.trim();
+            const loveMessage = document.getElementById('loveMessage').value.trim();
+
+            if (userName === "") {
+                alert("⚠️ Please enter your name!");
+                return;
+            }
+
+            localStorage.setItem("loveLetterData", JSON.stringify({
+                name: userName,
+                recipient: recipientName || "Not Provided",
+                message: loveMessage || "No custom message"
+            }));
+
+            window.location.href = "love-demo.html"; // Redirect to demo page
+        });
+    </script>
+</body>
+</html>
