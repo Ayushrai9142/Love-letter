@@ -8,22 +8,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>💖 Customize Your Love Letter 💖</h1>
-        <p class="love-text">
-            Fill in the details below to create a special love letter for your soulmate
-        </p>
+        <div class="recipient-box"> <!-- White Box for Details -->
+            <h1>💖 Customize Your Love Letter 💖</h1>
+            <p class="love-text">
+                Fill in the details below to create a special love letter for your soulmate.
+            </p>
 
-        <div class="form-box">
             <form id="recipientForm">
+                <!-- Your Name (Mandatory) -->
                 <label for="yourName">Your Name: <span class="required-star">*</span></label>
                 <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
 
-                <label for="recipientName">Recipient's Name <span class="optional-text">(Optional)</span>:</label>
-                <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+                <!-- Recipient Name (Optional inside box) -->
+                <label for="recipientName">Recipient's Name:</label>
+                <div class="recipient-input">
+                    <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+                    <span class="optional-label">Optional</span>
+                </div>
 
-                <label for="customMessage">Custom Message <span class="optional-text">(Optional)</span>:</label>
+                <!-- Custom Message (Optional) -->
+                <label for="customMessage">Custom Message (Optional):</label>
                 <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
 
+                <!-- Next Button -->
                 <button type="submit" class="get-started">Next</button>
             </form>
         </div>
@@ -32,14 +39,27 @@
     <script>
         document.getElementById("recipientForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            // Save details to localStorage (for now)
-            localStorage.setItem("yourName", document.getElementById("yourName").value);
-            localStorage.setItem("recipientName", document.getElementById("recipientName").value);
-            localStorage.setItem("customMessage", document.getElementById("customMessage").value);
 
-            // Redirect to payment (or next step)
+            // Input Fields
+            let yourName = document.getElementById("yourName").value.trim();
+            let recipientName = document.getElementById("recipientName").value.trim();
+            let customMessage = document.getElementById("customMessage").value.trim();
+
+            // Validation: Your Name Required
+            if (yourName === "") {
+                alert("Please enter your name. This field is required!");
+                return; // Stop Submission
+            }
+
+            // Store Data in Local Storage
+            localStorage.setItem("yourName", yourName);
+            localStorage.setItem("recipientName", recipientName);
+            localStorage.setItem("customMessage", customMessage);
+
+            // Redirect to Payment Page
             window.location.href = "payment.html"; 
         });
     </script>
 </body>
 </html>
+
