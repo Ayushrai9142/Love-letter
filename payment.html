@@ -33,20 +33,16 @@
         </form>
     </div>
 
-    <!-- JavaScript Code for Handling Form Submission -->
     <script>
-        // URL se sender aur recipient ka naam read karna
+        // ✅ Fix: URL se custom message bhi lena
         const urlParams = new URLSearchParams(window.location.search);
         const senderName = urlParams.get("sender") || "Your Admirer";
         const recipientName = urlParams.get("recipient") || "My Love";
-
-        console.log("Sender:", senderName);
-        console.log("Recipient:", recipientName);
+        const customMessage = urlParams.get("message") ? decodeURIComponent(urlParams.get("message")) : ""; // ✅ Fix
 
         document.getElementById("paymentForm").addEventListener("submit", async function(event) {
-            event.preventDefault();  // Prevent default form submission
+            event.preventDefault();
 
-            // Create JSON object from form data
             const formData = {
                 name: document.getElementById("name").value,
                 txn_id: document.getElementById("txn-id").value,
@@ -58,14 +54,14 @@
                 const response = await fetch("/.netlify/functions/paymentHandler", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData), // Send JSON data
+                    body: JSON.stringify(formData),
                 });
 
                 const result = await response.json();
-                alert(result.message);  // Show success message
+                alert(result.message);
                 if (response.ok) {
-                    // Redirect to confirmation.html with sender & recipient name
-                    window.location.href = `confirmation.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}`;
+                    // ✅ Fix: Message bhi URL me bhejna hai
+                    window.location.href = `confirmation.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodeURIComponent(customMessage)}`;
                 }
             } catch (error) {
                 console.error("Error:", error);
