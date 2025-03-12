@@ -53,8 +53,11 @@
             localStorage.setItem("recipientName", recipientName);
             localStorage.setItem("customMessage", customMessage);
 
-            // Redirect to Payment Page
-            window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}`;
+            // Encode custom message for URL
+            let encodedMessage = encodeURIComponent(customMessage);
+
+            // Redirect to Payment Page with URL Parameters
+            window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
         });
     </script>
 </body>
