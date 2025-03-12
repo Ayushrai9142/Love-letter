@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const revealButton = document.getElementById("revealButton");
     revealButton.textContent = `💖 Reveal ${senderName}'s Heart 💖`;
 
+    // Update heading text
+    document.querySelector(".title").textContent = "A Special Message";
+
+    // Update "Dear" section with recipient's name
+    document.getElementById("dearText").textContent = `Dear ${recipientName},`;
+
     // Reveal message when the button is clicked
     const secretElement = document.getElementById("secret");
     revealButton.addEventListener("click", function() {
