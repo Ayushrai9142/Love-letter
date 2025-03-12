@@ -57,7 +57,9 @@
             localStorage.setItem("customMessage", customMessage);
 
             // Redirect to Payment Page
-            window.location.href = "payment.html"; 
+            // Redirect to Payment Page with URL Parameters
+window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}`;
+            
         });
     </script>
 </body>
