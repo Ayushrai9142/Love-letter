@@ -9,16 +9,16 @@ exports.handler = async function(event) {
     }
 
     try {
-        // Parse form data from JSON
+        // Parse JSON Data
         const formData = JSON.parse(event.body);
-        const { name, txn_id, email, phone, screenshot } = formData;
+        const { name, txn_id, email, phone } = formData;
 
-        // Nodemailer setup
+        // Nodemailer Setup
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "ayushrai7533@gmail.com",  // ✅ Apna email yahan dalna
-                pass: "ztgw qcow wjhk wwcv",  // ❌ Real password mat likho, "App Password" generate karo
+                user: "ayushrai7533@gmail.com",  
+                pass: "byiz iopt ceyr vzzy",  // ⚠ Use App Password Here
             },
         });
 
@@ -26,21 +26,20 @@ exports.handler = async function(event) {
             from: "ayushrai7533@gmail.com",
             to: "ayushrai7533@gmail.com",  
             subject: "New Payment Received",
-            text: `Payment Details:
+            text: `Payment Details:\n
                 Name: ${name}
                 Transaction ID: ${txn_id}
                 Email: ${email}
                 Phone: ${phone}
-                Screenshot: ${screenshot ? "Yes" : "No file uploaded"}
             `,
         };
 
-        // Send email
+        // Send Email
         await transporter.sendMail(mailOptions);
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Payment details received!" }),
+            body: JSON.stringify({ message: "Payment details received successfully!" }),
         };
     } catch (error) {
         console.error("Error:", error);
