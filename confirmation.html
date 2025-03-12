@@ -9,31 +9,22 @@
 <body>
     <div class="container">
         <h2>Payment Submitted Successfully!</h2>
-        <p>We are verifying your payment. Your personalized love letter link will be generated shortly.</p>
-        <p>If you have any questions, contact us at: <a href="mailto:ayushrai7533@gmail.com">ayushrai7533@gmail.com</a></p>
-
-        <div id="loadingMessage">⏳ Generating your love letter... Please wait 10 seconds.</div>
-        <p id="loveLetterLink" style="display: none;">
-            🎉 Your personalized love letter is ready! <br>
-            <a id="letterLink" href="#" target="_blank">Click here to view your love letter</a>
+        <p>We will verify your payment and send your personalized love letter link soon.</p>
+        <p>If you have any questions, contact us at: <a href="mailto:your-ayushrai7533@gmail.com">your-ayushrai7533@gmail.com</a></p>
+        <p>Click here to view your personalized love letter: 
+            <a id="loveLetterLink" href="#">Loading...</a>
         </p>
-
         <a href="index.html" class="btn">Go to Homepage</a>
     </div>
 
     <script>
-        // Retrieve stored names from localStorage
-        const yourName = localStorage.getItem("yourName") || "Someone";
-        const recipientName = localStorage.getItem("recipientName") || "Dear";
-
-        // Generate the personalized love letter link
-        const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}`;
-
-        // Wait for 10 seconds before showing the link
         setTimeout(() => {
-            document.getElementById("loadingMessage").style.display = "none";
-            document.getElementById("loveLetterLink").style.display = "block";
-            document.getElementById("letterLink").href = loveLetterURL;
+            const yourName = localStorage.getItem("yourName") || "Someone Special";
+            const recipientName = localStorage.getItem("recipientName") || "Dear";
+            const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}`;
+            
+            document.getElementById("loveLetterLink").href = loveLetterURL;
+            document.getElementById("loveLetterLink").textContent = "Click here!";
         }, 10000);
     </script>
 </body>
