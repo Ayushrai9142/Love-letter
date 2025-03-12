@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: "💌";
+    font-size: 100px;
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    opacity: 0.2;
+}
+
+.title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    color: #e91e63;
+    margin-bottom: 10px;
+}
+
+.date {
+    font-style: italic;
+    color: #555;
+}
+
+.letter {
+    margin: 20px 0;
+    line-height: 1.6;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 15px 25px;
+    background: linear-gradient(45deg, #ff758c, #ff7eb3);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: pulse 1.5s infinite;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff5e62, #ff9966);
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.secret {
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    font-weight: bold;
+    color: #e91e63;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
