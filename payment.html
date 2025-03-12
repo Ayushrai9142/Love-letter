@@ -23,9 +23,6 @@
             <label for="txn-id">Transaction ID:</label>
             <input type="text" id="txn-id" name="txn_id" required>
 
-            <label for="screenshot">Upload Payment Screenshot:</label>
-            <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
-
             <label for="email">Your Email:</label>
             <input type="email" id="email" name="email" required>
 
@@ -41,17 +38,26 @@
         document.getElementById("paymentForm").addEventListener("submit", async function(event) {
             event.preventDefault();  // Prevent default form submission
 
-            const formData = new FormData(this); // FormData object to handle file uploads
+            // Create JSON object from form data
+            const formData = {
+                name: document.getElementById("name").value,
+                txn_id: document.getElementById("txn-id").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value
+            };
 
             try {
                 const response = await fetch("/.netlify/functions/paymentHandler", {
                     method: "POST",
-                    body: formData,  // Send formData instead of JSON
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData), // Send JSON data
                 });
 
                 const result = await response.json();
                 alert(result.message);  // Show success message
-                window.location.href = "confirmation.html"; // Redirect to confirmation page
+                if (response.ok) {
+                    window.location.href = "confirmation.html"; // Redirect on success
+                }
             } catch (error) {
                 console.error("Error:", error);
                 alert("Something went wrong. Please try again.");
