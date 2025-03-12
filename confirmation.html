@@ -10,7 +10,9 @@
     <div class="container">
         <h2>Payment Submitted Successfully!</h2>
         <p>We will verify your payment and send your personalized love letter link soon.</p>
-        <p>If you have any questions, contact us at: <a href="mailto:ayushrai7533@gmail.com">ayushrai7533@gmail.com</a></p>
+        <p>If you have any questions, contact us at: 
+            <a href="mailto:ayushrai7533@gmail.com">ayushrai7533@gmail.com</a>
+        </p>
         <p>Click here to view your personalized love letter: 
             <a id="loveLetterLink" href="#">Loading...</a>
         </p>
@@ -19,10 +21,15 @@
 
     <script>
         setTimeout(() => {
+            // ✅ Fetching user data from localStorage
             const yourName = localStorage.getItem("yourName") || "Someone Special";
             const recipientName = localStorage.getItem("recipientName") || "Dear";
-            const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}`;
-            
+            const customMessage = localStorage.getItem("customMessage") || ""; // ✅ Custom message fix
+
+            // ✅ Creating the correct URL with custom message
+            const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodeURIComponent(customMessage)}`;
+
+            // ✅ Updating the link with correct URL
             document.getElementById("loveLetterLink").href = loveLetterURL;
             document.getElementById("loveLetterLink").textContent = "Click here!";
         }, 10000);
