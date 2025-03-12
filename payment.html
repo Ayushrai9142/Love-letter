@@ -35,6 +35,14 @@
 
     <!-- JavaScript Code for Handling Form Submission -->
     <script>
+        // URL se sender aur recipient ka naam read karna
+        const urlParams = new URLSearchParams(window.location.search);
+        const senderName = urlParams.get("sender") || "Your Admirer";
+        const recipientName = urlParams.get("recipient") || "My Love";
+
+        console.log("Sender:", senderName);
+        console.log("Recipient:", recipientName);
+
         document.getElementById("paymentForm").addEventListener("submit", async function(event) {
             event.preventDefault();  // Prevent default form submission
 
@@ -56,7 +64,8 @@
                 const result = await response.json();
                 alert(result.message);  // Show success message
                 if (response.ok) {
-                    window.location.href = "confirmation.html"; // Redirect on success
+                    // Redirect to confirmation.html with sender & recipient name
+                    window.location.href = `confirmation.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}`;
                 }
             } catch (error) {
                 console.error("Error:", error);
