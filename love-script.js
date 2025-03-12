@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Reveal message when button is clicked
     const secretElement = document.getElementById("secret");
     revealButton.addEventListener("click", function() {
-        if (customMessage) {
+        if (customMessage && customMessage.trim() !== "") {
             // Agar user ne custom message diya hai, toh wahi show hoga
             secretElement.innerHTML = `${recipientName}, ${customMessage}`;
         } else {
