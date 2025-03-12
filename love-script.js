@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve sender & recipient names from URL
+    // Retrieve sender, recipient names & custom message from URL
     const urlParams = new URLSearchParams(window.location.search);
+
     const senderName = urlParams.get("sender") || "Someone";
     const recipientName = urlParams.get("recipient") || "Dear";
+    const customMessage = urlParams.get("message") ? decodeURIComponent(urlParams.get("message")) : "";
 
     // Update button text
     const revealButton = document.getElementById("revealButton");
@@ -14,8 +16,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // Reveal message when button is clicked
     const secretElement = document.getElementById("secret");
     revealButton.addEventListener("click", function() {
-        secretElement.innerHTML = `${recipientName}, you are the most beautiful part of my life. Without you, everything feels incomplete. ❤️<br><br>
-        You don't know how much I love you, just like a cherry on top of a cake! 🍒`;
+        if (customMessage) {
+            // Agar user ne custom message diya hai, toh wahi show hoga
+            secretElement.innerHTML = `${recipientName}, ${customMessage}`;
+        } else {
+            // Default message agar custom message nahi diya gaya hai
+            secretElement.innerHTML = `${recipientName}, you are the most beautiful part of my life. Without you, everything feels incomplete. ❤️<br><br>
+            You don't know how much I love you, just like a cherry on top of a cake! 🍒`;
+        }
+        
         secretElement.style.opacity = "1"; // Show message
         revealButton.style.display = "none"; // Hide button
 
