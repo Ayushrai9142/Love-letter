@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Update the button text dynamically
     const revealButton = document.getElementById("revealButton");
-    revealButton.textContent = `💖 Reveal ${senderName}'s Heart 💖`;
+    revealButton.innerHTML = `💖 Reveal ${senderName}'s Heart 💖`;
 
     // Update heading text
     document.querySelector(".title").textContent = "A Special Message";
