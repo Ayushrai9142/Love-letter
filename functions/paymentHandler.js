@@ -11,7 +11,7 @@ exports.handler = async function(event) {
     try {
         // Parse JSON Data
         const formData = JSON.parse(event.body);
-        const { name, txn_id, email, phone } = formData;
+        const { name, txn_id, email, phone, sender, recipient, message } = formData;
 
         // Nodemailer Setup
         let transporter = nodemailer.createTransport({
@@ -25,12 +25,18 @@ exports.handler = async function(event) {
         let mailOptions = {
             from: "ayushrai7533@gmail.com",
             to: "ayushrai7533@gmail.com",  
-            subject: "New Payment Received",
-            text: `Payment Details:\n
-                Name: ${name}
-                Transaction ID: ${txn_id}
-                Email: ${email}
-                Phone: ${phone}
+            subject: "New Payment Received 💰",
+            text: `🎉 You have received a new payment! 🎉\n\n
+            🛒 **Payment Details:**\n
+            - Name: ${name}
+            - Transaction ID: ${txn_id}
+            - Email: ${email}
+            - Phone: ${phone}\n\n
+            💌 **Love Letter Details:**\n
+            - Sender: ${sender || "Unknown"}
+            - Recipient: ${recipient || "Not Provided"}
+            - Custom Message: ${message || "No custom message provided."}\n\n
+            ✅ Please verify the payment and generate the love letter link.\n
             `,
         };
 
