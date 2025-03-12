@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Letter</title>
     <link rel="stylesheet" href="love-style.css">
-    <script src="love-script.js" defer></script>
 </head>
 <body>
 
     <div class="container">
-        <h1 class="title">A Special Message</h1>
+        <h1 class="title">A Special Message from <span id="senderName">Someone</span></h1>
         <p class="date" id="date"></p>
         
         <div class="letter">
-            <p id="dear">Dear,</p>
+            <p>Dear <span id="recipientName">Someone</span>,</p>
             <p>There are so many things I want to say, but words will never be enough to express how much I love you.</p>
             <p>Click the button below to reveal what my heart truly feels.</p>
         </div>
 
-        <button id="revealButton">💖 Reveal Love 💖</button>
+        <button id="revealButton">💖 Reveal <span id="senderHeart">Someone's</span> Heart 💖</button>
 
         <p id="secret" class="secret"></p>
     </div>
 
+    <script src="love-script.js"></script>
 </body>
 </html>
