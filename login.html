@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        // ✅ Fix: If already logged in, redirect to index.html
+        if (sessionStorage.getItem("loggedIn")) {
+            window.location.href = "index.html";
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Login to Continue</h2>
+    <div class="login-container">
+        <h1>Login</h1>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="Enter Username" required>
-            <input type="password" id="password" placeholder="Enter Password" required>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
             <button type="submit">Login</button>
+            <p id="error-message" class="error-message"></p>
         </form>
-        <p id="errorMessage" style="color: red;"></p>
     </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            // Dummy Username & Password
-            const validUser = "Ayush123";
-            const validPass = "9142";
-
-            if (username === validUser && password === validPass) {
-                localStorage.setItem("isLoggedIn", "true"); // Save login status
-                window.location.href = "details.html"; // Redirect to details page
-            } else {
-                document.getElementById('errorMessage').textContent = "⚠️ Invalid Username or Password!";
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
