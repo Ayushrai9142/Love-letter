@@ -9,16 +9,22 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
         return;
     }
 
-    // Fake authentication for now (Future me backend connect hoga)
-    if (username === "test" && password === "1234") {
+    // ✅ Fixed Username & Password
+    if (username === "Ayush123" && password === "9142") {
         showSuccess("✅ Login successful! Redirecting...");
+        sessionStorage.setItem("loggedIn", "true"); // Save login status
         setTimeout(() => {
-            window.location.href = "payment.html"; // Payment page pe redirect
+            window.location.href = "index.html"; // Redirect to home page
         }, 2000);
     } else {
         showError("❌ Invalid credentials! Try again.");
     }
 });
+
+// ✅ Agar already logged in hai to direct `index.html` pe bhejo
+if (sessionStorage.getItem("loggedIn")) {
+    window.location.href = "index.html";
+}
 
 // Function to show error messages
 function showError(message) {
