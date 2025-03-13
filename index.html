@@ -8,7 +8,7 @@
     <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
 
     <title>Love Letter Service</title>
-    <link rel="stylesheet" href="styles.css">  <!-- ✅ Fixed missing ">" -->
+    <link rel="stylesheet" href="styles.css">  
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- ✅ Google Analytics Tracking Code -->
@@ -22,9 +22,9 @@
     </script>
 
     <script>
-        // Check if user is logged in
-        if (!localStorage.getItem("isLoggedIn")) {
-            window.location.href = "login.html"; // Redirect to login page
+        // ✅ Fix: Check if user is logged in using sessionStorage
+        if (!sessionStorage.getItem("loggedIn")) {
+            window.location.href = "login.html"; // Redirect to login page if not logged in
         }
     </script>
 </head>
