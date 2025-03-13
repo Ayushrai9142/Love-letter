@@ -3,7 +3,7 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
 
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
-    const errorBox = document.getElementById("error-message"); // ✅ ID fix kiya
+    const errorBox = document.getElementById("error-message");
     const loginButton = document.querySelector("button");
 
     errorBox.innerHTML = "";
@@ -15,9 +15,9 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
             showError("⚠️ Please enter both username and password!");
         } else if (username === "Ayush123" && password === "9142") {
             showSuccess("✅ Login successful! Redirecting...");
-            sessionStorage.setItem("loggedIn", "true"); // ✅ sessionStorage use kiya
+            sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store kiya
             setTimeout(() => {
-                window.location.href = "index.html";  // ✅ Index page open hoga
+                window.location.href = "index.html";  // ✅ Ab login ke baad INDEX PAGE open hoga
             }, 2000);
         } else {
             showError("❌ Invalid username or password! Try again.");
