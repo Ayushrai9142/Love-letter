@@ -6,6 +6,10 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    height: 100vh; /* Fix shifting issue */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Main Container */
@@ -250,7 +254,7 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* 🔥 Login Page Styling (Added) */
+/* 🔥 Login Page Styling (Fixed) */
 .login-container {
     width: 90%;
     max-width: 400px;
@@ -260,13 +264,10 @@ button:hover {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 1.5s ease-in;
     
-    /* Centering the login form */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* Centering */
+    position: relative;
+    transform: none;
 }
 
 .login-container h2 {
@@ -275,12 +276,13 @@ button:hover {
 }
 
 .login-container input {
-    width: 100%;
+    width: calc(100% - 24px); /* Fix red border overlap */
     padding: 12px;
     margin-bottom: 15px;
     border: 2px solid #ff4b2b;
     border-radius: 5px;
     font-size: 16px;
+    box-sizing: border-box; /* Prevent overflow */
 }
 
 .login-container button {
