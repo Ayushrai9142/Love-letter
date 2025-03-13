@@ -80,7 +80,6 @@ button:hover {
     animation: fadeIn 1s ease-in;
 }
 
-/* Form Labels */
 .recipient-form label {
     font-size: 18px;
     font-weight: bold;
@@ -88,17 +87,18 @@ button:hover {
     margin-bottom: 5px;
 }
 
-/* Recipient Name Input */
-.recipient-input {
+/* Recipient Name Input & Custom Button */
+.recipient-name-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    position: relative;
+    flex-wrap: wrap;
     width: 100%;
 }
 
-.recipient-input input {
-    width: 100%;
+.recipient-name-container input {
+    flex: 1;
+    min-width: 60%;
     padding: 12px;
     border: 2px solid #ff4b2b;
     border-radius: 5px;
@@ -106,9 +106,35 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* Placeholder inside input field */
-.recipient-input input::placeholder {
-    font-style: italic;
+.custom-btn {
+    background: #ff4b2b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-btn:hover {
+    background: #e63950;
+}
+
+@media screen and (max-width: 768px) {
+    .recipient-name-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .recipient-name-container input {
+        width: 100%;
+    }
+}
+
+.recipient-form textarea {
+    height: 120px;
+    resize: none;
 }
 
 /* Get Started Button */
@@ -135,66 +161,10 @@ button:hover {
     box-shadow: 0 0 15px rgba(255, 75, 43, 0.8);
 }
 
-/* QR Code */
-.qr-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.qr-code {
-    width: 200px;
-    height: 150px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Login Page Styling */
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    color: black;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    animation: fadeIn 1s ease-in;
-}
-
-.login-container h2 {
-    font-size: 24px;
-    color: #ff4b2b;
-    margin-bottom: 20px;
-}
-
-.login-container input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ff4b2b;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
-
-.login-container input::placeholder {
-    font-style: italic;
-}
-
-.login-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    background: #ff4b2b;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.login-button:hover {
-    background: #e63950;
+@media screen and (max-width: 768px) {
+    .recipient-form {
+        width: 95%;
+    }
 }
 
 /* Animations */
@@ -212,4 +182,125 @@ button:hover {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
+}
+
+/* Red star for required fields */
+.required-star {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Recipient Name Input Styling */
+.recipient-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.recipient-input input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.recipient-input::after {
+    display: none;
+}
+
+/* QR Code */
+.qr-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qr-code {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Recipient Box */
+.recipient-box {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.5s ease-in;
+}
+
+.recipient-box input,
+.recipient-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* 🔥 Login Page Styling (Added) */
+.login-container {
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.5s ease-in;
+    
+    /* Centering the login form */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #ff4b2b;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background: #ff4b2b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background: #e63950;
+}
+
+@media screen and (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 20px;
+    }
 }
