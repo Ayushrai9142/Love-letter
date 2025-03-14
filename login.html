@@ -19,7 +19,7 @@
     </script>
 
     <script>
-        // ✅ Fix: If already logged in, redirect to index.html
+        // ✅ If already logged in, redirect to index.html
         if (sessionStorage.getItem("loggedIn")) {
             window.location.href = "index.html";
         }
@@ -28,14 +28,14 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <form id="loginForm">
+        <form id="loginForm" action="" autocomplete="off">  <!-- ✅ Fix: Disabled autocomplete -->
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" required>
+                <input type="text" id="username" required autocomplete="off">
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required>
+                <input type="password" id="password" required autocomplete="new-password">
             </div>
             <button type="submit">Login</button>
             <p id="error-message" class="error-message"></p>
