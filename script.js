@@ -13,7 +13,7 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
     setTimeout(() => {
         if (username === "" || password === "") {
             showError("⚠️ Please enter both username and password!");
-        } else if (username === "Ayush" && password === "9142") {
+        } else if (username === "xxx" && password === "xxx") {
             showSuccess("✅ Login successful! Redirecting...");
             sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store kiya
             setTimeout(() => {
