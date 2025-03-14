@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipient Details</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XXXXXXX'); // Apna Google Analytics Tracking ID dalna
+    </script>
 </head>
 <body>
     <div class="container">
-        <div class="recipient-box"> <!-- Fixed White Box -->
+        <div class="recipient-box">
             <h1>💖 Customize Your Love Letter 💖</h1>
             <p class="love-text">
                 Fill in the details below to create a special love letter for your soulmate.
@@ -43,9 +53,15 @@
             let customMessage = document.getElementById("customMessage").value.trim();
 
             // Validation: Your Name Required
-            if (yourName === "") {
+            if (!yourName.replace(/\s/g, '').length) {
                 alert("Please enter your name. This field is required!");
-                return; // Stop Submission
+                return;
+            }
+
+            // Custom Message Length Validation
+            if (customMessage.length > 300) { // 300 characters limit
+                alert("Your custom message is too long! Please keep it under 300 characters.");
+                return;
             }
 
             // Store Data in Local Storage
