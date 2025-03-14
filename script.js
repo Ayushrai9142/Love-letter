@@ -11,14 +11,16 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
     loginButton.disabled = true;
 
     setTimeout(() => {
-        if (username === "Ayush" || password === "9142") {
+        if (username === "" || password === "") {
             showError("⚠️ Please enter both username and password!");
-        } else {
+        } else if (username === "Ayush" && password === "9142") {
             showSuccess("✅ Login successful! Redirecting...");
             sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store kiya
             setTimeout(() => {
                 window.location.href = "index.html";  // ✅ Ab login ke baad INDEX PAGE open hoga
             }, 2000);
+        } else {
+            showError("❌ Invalid username or password! Try again.");
         }
         loginButton.innerHTML = "Login";
         loginButton.disabled = false;
