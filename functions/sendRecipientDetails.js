@@ -9,7 +9,7 @@ exports.handler = async (event) => {
             service: "gmail",
             auth: {
                 user: "ayushrai7533@gmail.com",
-                pass: "byiz iotv jjjr vzzy" // ⚠️ App Password ka dhyan rakhna
+                pass: "byiz iopt ceyr vzzy" // ⚠️ App Password ka dhyan rakhna
             }
         });
 
