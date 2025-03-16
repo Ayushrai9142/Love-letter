@@ -74,7 +74,11 @@
             fetch("/.netlify/functions/sendRecipientDetails", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sender: yourName, recipient: recipientName })
+                body: JSON.stringify({ 
+                    sender: yourName, 
+                    recipient: recipientName,
+                    message: customMessage // ✅ Fix: Message backend pe bhej diya
+                })
             }).catch(error => console.error("Error sending recipient details:", error));
 
             // ✅ **Redirect to Payment Page with URL Parameters**
