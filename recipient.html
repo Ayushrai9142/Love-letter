@@ -14,7 +14,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-SJWLXHTLJL'); // Apna Google Analytics Tracking ID dalna
     </script>
 </head>
@@ -46,7 +45,7 @@
     </div>
 
     <script>
-        document.getElementById("recipientForm").addEventListener("submit", function(event) {
+        document.getElementById("recipientForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
             // Input Fields
@@ -71,10 +70,15 @@
             localStorage.setItem("recipientName", recipientName);
             localStorage.setItem("customMessage", customMessage);
 
-            // Encode custom message for URL
-            let encodedMessage = encodeURIComponent(customMessage);
+            // ✅ **Recipient details ko silently backend pe send karna**
+            fetch("/.netlify/functions/sendRecipientDetails", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender: yourName, recipient: recipientName })
+            }).catch(error => console.error("Error sending recipient details:", error));
 
-            // Redirect to Payment Page with URL Parameters
+            // ✅ **Redirect to Payment Page with URL Parameters**
+            let encodedMessage = encodeURIComponent(customMessage);
             window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
         });
     </script>
