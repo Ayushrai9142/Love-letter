@@ -39,19 +39,21 @@
 
             let imageUrls = [];
             for (let i = 0; i < photos.length; i++) {
-                let imgURL = URL.createObjectURL(photos[i]);
-                imageUrls.push(imgURL);
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    imageUrls.push(e.target.result);
+                    if (imageUrls.length === photos.length) {
+                        localStorage.setItem("sender", senderName);
+                        localStorage.setItem("recipient", recipientName);
+                        localStorage.setItem("images", JSON.stringify(imageUrls));
+
+                        window.location.href = "photo-preview.html"; 
+                        sessionStorage.setItem("visitedNewRecipient", "true");
+                    }
+                };
+                reader.readAsDataURL(photos[i]);
             }
-
-            localStorage.setItem("sender", senderName);
-            localStorage.setItem("recipient", recipientName);
-            localStorage.setItem("images", JSON.stringify(imageUrls));
-
-            window.location.href = "photo-preview.html"; 
-            sessionStorage.setItem("visitedNewRecipient", "true");
-            
         });
     </script>
 </body>
-  </html>
-  
+</html>
