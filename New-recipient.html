@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipient Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Recipient Details</h2>
+        <form id="recipientForm">
+            <label for="sender">Sender Name *</label>
+            <input type="text" id="sender" name="sender" required>
+
+            <label for="recipient">Recipient Name (Optional)</label>
+            <input type="text" id="recipient" name="recipient">
+
+            <label for="photos">Upload 4-5 Photos *</label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+            <p id="photoError" style="color: red; display: none;">Please upload 4 to 5 images.</p>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("recipientForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let senderName = document.getElementById("sender").value;
+            let recipientName = document.getElementById("recipient").value || "Special One";
+            let photos = document.getElementById("photos").files;
+
+            if (photos.length < 4 || photos.length > 5) {
+                document.getElementById("photoError").style.display = "block";
+                return;
+            }
+
+            let imageUrls = [];
+            for (let i = 0; i < photos.length; i++) {
+                let imgURL = URL.createObjectURL(photos[i]);
+                imageUrls.push(imgURL);
+            }
+
+            localStorage.setItem("sender", senderName);
+            localStorage.setItem("recipient", recipientName);
+            localStorage.setItem("images", JSON.stringify(imageUrls));
+
+            window.location.href = "photo-preview.html"; 
+        });
+    </script>
+</body>
+  </html>
+  
