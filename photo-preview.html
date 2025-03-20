@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Preview</title>
-    <link rel="stylesheet" href="new-styles.css">
+    <link rel="stylesheet" href="photo-preview.css">
 </head>
 <body>
     <div class="preview-container">
@@ -14,7 +14,7 @@
                 <!-- Photos will be added dynamically -->
             </div>
         </div>
-        <button id="nextButton">Next</button>
+        <button onclick="goToLogin()">Next</button>
     </div>
 
     <script>
@@ -33,16 +33,39 @@
                 return;
             }
 
-            images.forEach((imgSrc) => {
+            let angleStep = 360 / images.length;
+            images.forEach((imgSrc, index) => {
                 let img = document.createElement("img");
                 img.src = imgSrc;
                 img.classList.add("carousel-item");
+                let angle = index * angleStep;
+                img.style.transform = `rotateY(${angle}deg) translateZ(250px)`;
                 carousel.appendChild(img);
             });
 
-            document.getElementById("nextButton").addEventListener("click", function () {
-                window.location.href = "login.html";
+            let isDragging = false;
+            let startX, currentRotation = 0;
+
+            carousel.addEventListener("mousedown", function (event) {
+                isDragging = true;
+                startX = event.clientX;
             });
+
+            document.addEventListener("mousemove", function (event) {
+                if (!isDragging) return;
+                let moveX = event.clientX - startX;
+                currentRotation += moveX / 5;
+                carousel.style.transform = `rotateY(${currentRotation}deg)`;
+                startX = event.clientX;
+            });
+
+            document.addEventListener("mouseup", function () {
+                isDragging = false;
+            });
+
+            function goToLogin() {
+                window.location.href = "login.html";
+            }
         });
     </script>
 </body>
