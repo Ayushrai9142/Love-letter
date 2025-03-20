@@ -46,12 +46,12 @@
             let isDragging = false;
             let startX, currentRotation = 0;
 
-            carousel.addEventListener("mousedown", function (event) {
+            carousel.addEventListener("pointerdown", function (event) {
                 isDragging = true;
                 startX = event.clientX;
             });
 
-            document.addEventListener("mousemove", function (event) {
+            document.addEventListener("pointermove", function (event) {
                 if (!isDragging) return;
                 let moveX = event.clientX - startX;
                 currentRotation += moveX / 5;
@@ -59,14 +59,14 @@
                 startX = event.clientX;
             });
 
-            document.addEventListener("mouseup", function () {
+            document.addEventListener("pointerup", function () {
                 isDragging = false;
             });
-
-            function goToLogin() {
-                window.location.href = "login.html";
-            }
         });
+
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
     </script>
 </body>
 </html>
