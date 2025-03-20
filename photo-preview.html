@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Preview</title>
-    <link rel="stylesheet" href="photo-preview.css">
+    <link rel="stylesheet" href="new-stylis.css">
 </head>
 <body>
     <div class="preview-container">
@@ -34,12 +34,14 @@
             }
 
             let angleStep = 360 / images.length;
+            let radius = window.innerWidth < 600 ? 120 : 250;  // Mobile view ke liye chhota radius
+
             images.forEach((imgSrc, index) => {
                 let img = document.createElement("img");
                 img.src = imgSrc;
                 img.classList.add("carousel-item");
                 let angle = index * angleStep;
-                img.style.transform = `rotateY(${angle}deg) translateZ(250px)`;
+                img.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
                 carousel.appendChild(img);
             });
 
@@ -62,11 +64,11 @@
             document.addEventListener("pointerup", function () {
                 isDragging = false;
             });
-        });
 
-        function goToLogin() {
-            window.location.href = "login.html";
-        }
+            function goToLogin() {
+                window.location.href = "login.html";
+            }
+        });
     </script>
 </body>
 </html>
