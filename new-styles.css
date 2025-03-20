@@ -21,6 +21,7 @@ body {
 h2 {
     margin-bottom: 20px;
     font-size: 24px;
+    color: #fff;
 }
 
 .carousel-container {
@@ -35,7 +36,7 @@ h2 {
     height: 100%;
     position: absolute;
     transform-style: preserve-3d;
-    animation: rotateGallery 20s linear infinite;
+    animation: rotateGallery 15s linear infinite;
 }
 
 @keyframes rotateGallery {
@@ -48,10 +49,10 @@ h2 {
 }
 
 .carousel-item {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 50%;
     border: 3px solid #fff;
     position: absolute;
     left: 50%;
