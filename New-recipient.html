@@ -32,7 +32,7 @@
             let recipientName = document.getElementById("recipient").value || "Special One";
             let photos = document.getElementById("photos").files;
 
-            if (photos.length < 4 || photos.length > 5) {
+            if (photos.length < 4 || photos.length > 10) {
                 document.getElementById("photoError").style.display = "block";
                 return;
             }
