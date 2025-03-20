@@ -48,6 +48,8 @@
             localStorage.setItem("images", JSON.stringify(imageUrls));
 
             window.location.href = "photo-preview.html"; 
+            sessionStorage.setItem("visitedNewRecipient", "true");
+            
         });
     </script>
 </body>
