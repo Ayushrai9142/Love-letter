@@ -1,7 +1,15 @@
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseConfig from "./firebase-config.js";
+
+// Firebase initialize
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 document.getElementById('loginForm')?.addEventListener('submit', function(event) {
     event.preventDefault();  // Page reload hone se roke
 
-    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     const errorBox = document.getElementById("error-message");
     const loginButton = document.querySelector("button");
@@ -10,21 +18,19 @@ document.getElementById('loginForm')?.addEventListener('submit', function(event)
     loginButton.innerHTML = "Logging in...";
     loginButton.disabled = true;
 
-    setTimeout(() => {
-        if (username === "" || password === "") {
-            showError("⚠️ Please enter both username and password!");
-        } else if (username === "Ayush" && password === "9142") {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
             showSuccess("✅ Login successful! Redirecting...");
             sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store kiya
             setTimeout(() => {
                 window.location.href = "index.html";  // ✅ Ab login ke baad INDEX PAGE open hoga
             }, 2000);
-        } else {
-            showError("❌ Invalid username or password! Try again.");
-        }
-        loginButton.innerHTML = "Login";
-        loginButton.disabled = false;
-    }, 1500);
+        })
+        .catch((error) => {
+            showError("❌ " + error.message);
+            loginButton.innerHTML = "Login";
+            loginButton.disabled = false;
+        });
 });
 
 // ✅ Function to show error messages
