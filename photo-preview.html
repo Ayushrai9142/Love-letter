@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Preview</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="new-styles.css">
 </head>
 <body>
     <div class="preview-container">
@@ -14,7 +14,7 @@
                 <!-- Photos will be added dynamically -->
             </div>
         </div>
-        <button onclick="goToLogin()">Next</button>
+        <button id="nextButton">Next</button>
     </div>
 
     <script>
@@ -33,39 +33,16 @@
                 return;
             }
 
-            let angleStep = 360 / images.length;
-            images.forEach((imgSrc, index) => {
+            images.forEach((imgSrc) => {
                 let img = document.createElement("img");
                 img.src = imgSrc;
                 img.classList.add("carousel-item");
-                let angle = index * angleStep;
-                img.style.transform = `rotateY(${angle}deg) translateZ(150px)`;
                 carousel.appendChild(img);
             });
 
-            let isDragging = false;
-            let startX, currentRotation = 0;
-
-            carousel.addEventListener("mousedown", function (event) {
-                isDragging = true;
-                startX = event.clientX;
-            });
-
-            document.addEventListener("mousemove", function (event) {
-                if (!isDragging) return;
-                let moveX = event.clientX - startX;
-                currentRotation += moveX / 5;
-                carousel.style.transform = `rotateY(${currentRotation}deg)`;
-                startX = event.clientX;
-            });
-
-            document.addEventListener("mouseup", function () {
-                isDragging = false;
-            });
-
-            function goToLogin() {
+            document.getElementById("nextButton").addEventListener("click", function () {
                 window.location.href = "login.html";
-            }
+            });
         });
     </script>
 </body>
