@@ -1,11 +1,30 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseConfig from "./firebase-config.js";
 import { initializeApp } from "firebase/app";
 
-// Firebase initialize
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// ✅ Firebase Config Fetch Function
+async function getFirebaseConfig() {
+    try {
+        const response = await fetch("/.netlify/functions/firebaseConfig");
+        const config = await response.json();
+        return config;
+    } catch (error) {
+        console.error("Error fetching Firebase config:", error);
+        return null;
+    }
+}
 
+// ✅ Initialize Firebase After Fetching Config
+async function initializeFirebase() {
+    const firebaseConfig = await getFirebaseConfig();
+    if (!firebaseConfig) {
+        console.error("Firebase Config Load Failed!");
+        return;
+    }
+    const app = initializeApp(firebaseConfig);
+    return getAuth(app);
+}
+
+// ✅ Signup Form Handling
 document.getElementById("signupForm").addEventListener("submit", async function (event) {
     event.preventDefault(); // Form submit hone se roke
 
@@ -23,6 +42,11 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     errorBox.innerHTML = "Creating account...";
 
     try {
+        const auth = await initializeFirebase();
+        if (!auth) {
+            throw new Error("Firebase authentication not initialized!");
+        }
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log("Signup successful!", userCredential); // ✅ Debug message
         errorBox.style.color = "#28a745";
@@ -36,4 +60,3 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         errorBox.innerHTML = `❌ ${error.message}`;
     }
 });
-        
