@@ -17,12 +17,14 @@ async function getFirebaseConfig() {
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
     if (!firebaseConfig) {
-        console.error("Firebase Config Load Failed!");
-        return;
+        console.error("🚨 Firebase Config Load Failed!");
+        return null;  // 🛑 Agar config load nahi hua to auth initialize mat karo
     }
     const app = initializeApp(firebaseConfig);
+    console.log("✅ Firebase Initialized!");  // 🔍 Debugging ke liye
     return getAuth(app);
 }
+
 
 // ✅ Signup Form Handling
 document.getElementById("signupForm").addEventListener("submit", async function (event) {
