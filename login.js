@@ -1,7 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// Firebase SDK ko properly import karna
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// ✅ Firebase config Netlify Functions se fetch karna
+// Firebase config fetch karne ka code (agar Netlify function ka use kar rahe ho)
 async function getFirebaseConfig() {
     const response = await fetch("/.netlify/functions/firebaseConfig");
     const config = await response.json();
