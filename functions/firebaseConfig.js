@@ -2,17 +2,6 @@ exports.handler = async function () {
     // Fetching Firebase CDN URLs from environment variable
     const firebaseCdnUrl = process.env.VITE_FIREBASE_CDN_URL;
 
-    // Check if firebaseCdnUrl is undefined or empty
-    if (!firebaseCdnUrl) {
-        console.error("🚨 VITE_FIREBASE_CDN_URL environment variable is not set!");
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                error: "Firebase CDN URL is not configured correctly."
-            })
-        };
-    }
-
     // Splitting the comma-separated URLs into an array
     const cdnUrls = firebaseCdnUrl.split(',');
 
