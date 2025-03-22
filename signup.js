@@ -9,8 +9,8 @@ async function getFirebaseConfig() {
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
-        const config = await response.json();
-        return config;
+        const { firebaseConfig } = await response.json();
+        return firebaseConfig;
     } catch (error) {
         console.error("🚨 Error fetching Firebase config:", error);
         return null;
@@ -20,8 +20,10 @@ async function getFirebaseConfig() {
 // ✅ Initialize Firebase After Fetching Config
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
-    if (!firebaseConfig) {
-        console.error("🚨 Firebase Config Load Failed!");
+    console.log("🔥 Firebase Config:", firebaseConfig); // ✅ Console me check karne ke liye
+
+    if (!firebaseConfig || !firebaseConfig.apiKey) {
+        console.error("🚨 Firebase Config Load Failed! API key missing.");
         return null;
     }
     const app = initializeApp(firebaseConfig);
@@ -39,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
         const errorBox = document.getElementById("signup-error-message");
-        const signupButton = document.getElementById("signupButton");
+        const signupButton = event.target.querySelector("button"); 
 
         if (!email || !password) {
             errorBox.innerHTML = "⚠️ Email aur password likho!";
