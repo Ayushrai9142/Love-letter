@@ -1,4 +1,8 @@
 [build]
+  command = "npm run build"
   functions = "functions"
   node_version = "18"
 
+[functions]
+  directory = "functions"
+  
