@@ -6,7 +6,6 @@ async function getFirebaseConfig() {
     try {
         const response = await fetch("/.netlify/functions/firebaseConfig");
         const config = await response.json();
-        console.log("✅ Firebase Config Loaded:", config);  // Debugging
         return config;
     } catch (error) {
         console.error("🚨 Error fetching Firebase config:", error);
@@ -22,26 +21,21 @@ async function initializeFirebase() {
         return null;
     }
     const app = initializeApp(firebaseConfig);
-    console.log("✅ Firebase Initialized!");  // Debugging
     return getAuth(app);
 }
 
 // ✅ Signup Form Handling
 document.addEventListener("DOMContentLoaded", async function () {
     const signupForm = document.getElementById("signupForm");
-    if (!signupForm) {
-        console.error("🚨 Signup form not found in DOM!");
-        return;
-    }
+    if (!signupForm) return;
 
     signupForm.addEventListener("submit", async function (event) {
-        event.preventDefault();  // ✅ Form submit hone se roko  
-        console.log("✅ Signup button clicked!");  // Debugging
+        event.preventDefault();  // ✅ Form reload hone se roko  
 
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
         const errorBox = document.getElementById("signup-error-message");
-        const signupButton = document.querySelector("button");
+        const signupButton = document.getElementById("signupButton");
 
         if (!email || !password) {
             errorBox.innerHTML = "⚠️ Email aur password likho!";
@@ -49,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         errorBox.innerHTML = "Creating account...";
+        errorBox.style.color = "#000";
         signupButton.innerHTML = "Signing Up...";
         signupButton.disabled = true;
 
@@ -70,6 +65,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error("🚨 Signup Error:", error.message);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${error.message}`;
+        } finally {
             signupButton.innerHTML = "Sign Up";
             signupButton.disabled = false;
         }
