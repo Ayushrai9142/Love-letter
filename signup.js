@@ -5,6 +5,9 @@ import { initializeApp } from "firebase/app";
 async function getFirebaseConfig() {
     try {
         const response = await fetch("/.netlify/functions/firebaseConfig");
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
         const config = await response.json();
         return config;
     } catch (error) {
