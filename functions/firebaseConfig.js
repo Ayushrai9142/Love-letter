@@ -1,14 +1,25 @@
 exports.handler = async function () {
-    // Firebase CDN URLs ko Netlify environment variable se fetch karna
-    const firebaseCdnUrl = process.env.FIREBASE_CDN_URL;
+    // Fetching Firebase CDN URLs from environment variable
+    const firebaseCdnUrl = process.env.VITE_FIREBASE_CDN_URL;
 
-    // Firebase SDK URLs ko split karna (agar multiple URLs hain)
+    // Check if firebaseCdnUrl is undefined or empty
+    if (!firebaseCdnUrl) {
+        console.error("🚨 VITE_FIREBASE_CDN_URL environment variable is not set!");
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                error: "Firebase CDN URL is not configured correctly."
+            })
+        };
+    }
+
+    // Splitting the comma-separated URLs into an array
     const cdnUrls = firebaseCdnUrl.split(',');
 
-    // Script tags ko dynamically generate karna
+    // Dynamically generating script tags for each CDN URL
     let scriptTags = cdnUrls.map(url => `<script src="${url}"></script>`).join('');
 
-    // Firebase Configuration details ko environment variables se fetch karna
+    // Firebase Configuration details from environment variables
     const firebaseConfig = {
         apiKey: process.env.VITE_FIREBASE_API_KEY,
         authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -18,12 +29,12 @@ exports.handler = async function () {
         appId: process.env.VITE_FIREBASE_APP_ID
     };
 
-    // Response return karte hain with Firebase config and script tags
+    // Returning the Firebase config and script tags
     return {
         statusCode: 200,
         body: JSON.stringify({
             firebaseConfig,
-            scriptTags // Firebase SDK script tags
+            scriptTags
         }),
     };
 };
