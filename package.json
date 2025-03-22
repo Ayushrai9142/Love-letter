@@ -10,7 +10,8 @@
     "firebase-functions": "^4.4.1"
   },
   "scripts": {
-    "start": "node functions/paymentHandler.js"
+    "start": "node functions/paymentHandler.js",
+    "build": "echo 'No build step required'"
   },
   "license": "MIT"
 }
