@@ -1,5 +1,5 @@
-// Firebase SDK ko properly import karna
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+// Firebase SDK Import
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // ✅ Firebase Config Fetch Function
@@ -20,13 +20,20 @@ async function getFirebaseConfig() {
 // ✅ Initialize Firebase After Fetching Config
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
-    console.log("🔥 Firebase Config:", firebaseConfig); // ✅ Console me check karne ke liye
+    console.log("🔥 Firebase Config:", firebaseConfig);
 
     if (!firebaseConfig || !firebaseConfig.apiKey) {
         console.error("🚨 Firebase Config Load Failed! API key missing.");
         return null;
     }
-    const app = initializeApp(firebaseConfig);
+
+    let app;
+    if (!getApps().length) {
+        app = initializeApp(firebaseConfig);
+    } else {
+        app = getApp();
+    }
+
     return getAuth(app);
 }
 
@@ -36,12 +43,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!signupForm) return;
 
     signupForm.addEventListener("submit", async function (event) {
-        event.preventDefault();  // ✅ Form reload hone se roko  
+        event.preventDefault();
 
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
         const errorBox = document.getElementById("signup-error-message");
-        const signupButton = event.target.querySelector("button"); 
+        const signupButton = event.target.querySelector("button");
 
         if (!email || !password) {
             errorBox.innerHTML = "⚠️ Email aur password likho!";
@@ -65,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             errorBox.innerHTML = "✅ Account created successfully! Redirecting...";
 
             setTimeout(() => {
-                window.location.href = "login.html"; 
+                window.location.href = "login.html";
             }, 2000);
         } catch (error) {
             console.error("🚨 Signup Error:", error.message);
