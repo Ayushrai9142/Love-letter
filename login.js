@@ -1,47 +1,60 @@
+// ✅ Firebase SDK Import
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 // ✅ Firebase Config Fetch Function
 async function getFirebaseConfig() {
     try {
         const response = await fetch("/.netlify/functions/firebaseConfig");
-        const data = await response.json();
-        console.log("✅ Firebase Config Loaded:", data.firebaseConfig);
-        return data.firebaseConfig;
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const { firebaseConfig } = await response.json();
+        return firebaseConfig;
     } catch (error) {
         console.error("🚨 Error fetching Firebase config:", error);
         return null;
     }
 }
 
-// ✅ Initialize Firebase
+// ✅ Firebase Initialization Function
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
-    if (!firebaseConfig) {
-        console.error("🚨 Firebase Config Load Failed!");
+    console.log("🔥 Firebase Config:", firebaseConfig);
+
+    if (!firebaseConfig || !firebaseConfig.apiKey) {
+        console.error("🚨 Firebase Config Load Failed! API key missing.");
         return null;
     }
 
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-        console.log("✅ Firebase Initialized!");
+    let app;
+    if (!getApps().length) {
+        app = initializeApp(firebaseConfig);
+    } else {
+        app = getApp();
     }
-    return firebase.auth();
+
+    return getAuth(app);
 }
 
 // ✅ Login Form Handling
 document.addEventListener("DOMContentLoaded", async function () {
     const loginForm = document.getElementById("loginForm");
-    if (!loginForm) {
-        console.error("🚨 Login form not found in DOM!");
+    if (!loginForm) return;
+
+    const auth = await initializeFirebase(); // 🔥 Firebase Init (Ab auth null nahi hoga)
+    if (!auth) {
+        console.error("🚨 Firebase Auth not initialized!");
         return;
     }
 
     loginForm.addEventListener("submit", async function (event) {
-        event.preventDefault();  // ✅ Page reload hone se roko  
-        console.log("✅ Login button clicked!");  // Debugging
+        event.preventDefault();
 
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
         const errorBox = document.getElementById("error-message");
-        const loginButton = document.querySelector("button");
+        const loginButton = event.target.querySelector("button");
 
         if (!email || !password) {
             errorBox.innerHTML = "⚠️ Email aur password likho!";
@@ -49,26 +62,26 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         errorBox.innerHTML = "Logging in...";
+        errorBox.style.color = "#000";
         loginButton.innerHTML = "Logging in...";
         loginButton.disabled = true;
 
         try {
-            const auth = await initializeFirebase();
-            if (!auth) throw new Error("🚨 Firebase authentication not initialized!");
-
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("✅ Login successful!", userCredential);
+
             errorBox.style.color = "#28a745";
             errorBox.innerHTML = "✅ Login successful! Redirecting...";
 
-            sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store kiya
+            sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store
             setTimeout(() => {
-                window.location.href = "index.html";  // ✅ Redirect to index page
+                window.location.href = "index.html";  // ✅ Login ke baad index.html open hoga
             }, 2000);
         } catch (error) {
             console.error("🚨 Login Error:", error.message);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${error.message}`;
+        } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
         }
