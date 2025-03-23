@@ -14,7 +14,14 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL'); // Apna Google Analytics Tracking ID dalna
+        gtag('config', 'G-SJWLXHTLJL');
+    </script>
+
+    <script>
+        // ✅ **Check if User is Logged In**
+        if (!sessionStorage.getItem("loggedIn")) {
+            window.location.href = "login.html"; // 🔄 Redirect to login if not logged in
+        }
     </script>
 </head>
 <body>
