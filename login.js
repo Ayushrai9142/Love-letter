@@ -35,19 +35,18 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
-// ✅ Custom Error Messages Mapping
+// ✅ Custom Error Messages
 function getCustomErrorMessage(errorCode) {
     const errorMessages = {
-        "auth/user-not-found": "⚠️ No account found. Please sign up first!",
+        "auth/user-not-found": "⚠️ This email is not registered. Sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
-        "auth/invalid-email": "⚠️ Invalid email format!",
-        "auth/user-disabled": "⚠️ This account is disabled!",
+        "auth/invalid-email": "⚠️ Please enter a valid email address!",
+        "auth/user-disabled": "⚠️ This account has been disabled!",
         "auth/missing-password": "⚠️ Please enter your password!",
         "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
         "auth/invalid-login-credentials": "⚠️ Invalid email or password!",
-        "auth/weak-password": "⚠️ Password must be at least 6 characters long!",
         "auth/email-not-registered": "⚠️ This email is not registered. Sign up first!"
     };
 
@@ -110,15 +109,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code);
 
-            // ✅ Extract Only Error Code Properly
-            const errorCode = error.code.replace("auth/", "").trim();
-            
-            let errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
+            // ✅ Firebase ke error code se sirf last part extract karna
+            let errorCode = error.code.split("/").pop().trim();
 
-            // ✅ Agar new email ho toh "Email Not Registered" ka message dikhao
-            if (error.code === "auth/user-not-found") {
-                errorMessage = "⚠️ This email is not registered. Sign up first!";
-            }
+            // ✅ Agar errorCode defined nahi hai toh default message do
+            let errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
 
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
