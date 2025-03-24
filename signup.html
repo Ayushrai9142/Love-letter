@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="signup-styles.css">
 
     <!-- Firebase CDN Links -->
     <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 </head>
 <body>
-    <div class="signup-container">
-        <h1>Sign Up</h1>
+    <div class="container">
+        <h2>Sign Up</h2>
         <form id="signupForm">
             <div class="input-group">
                 <label for="email">Email</label>
@@ -22,10 +22,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" required>
             </div>
-            <button id="signupButton" type="submit">Sign Up</button>
+            <button id="signupButton" type="submit" class="btn">Sign Up</button>
             <p id="signup-error-message" class="error-message"></p>
         </form>
-        <p>Already have an account? <a href="login.html">Login here</a></p>
+        <p>Already have an account? <a href="login.html">Log In</a></p>
     </div>
 
     <script type="module" src="signup.js"></script>
