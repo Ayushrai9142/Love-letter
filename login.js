@@ -1,6 +1,6 @@
 // ✅ Firebase SDK Import
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // ✅ Firebase Config Fetch Function
 async function getFirebaseConfig() {
@@ -54,6 +54,17 @@ function getCustomErrorMessage(error) {
     return errorMessages[error.code] || "⚠️ Unknown error occurred! Try again.";
 }
 
+// ✅ Function to Check If Email Exists
+async function checkEmailExists(auth, email) {
+    try {
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+        return signInMethods.length > 0; // True if email exists
+    } catch (error) {
+        console.error("🚨 Error checking email existence:", error);
+        return false;
+    }
+}
+
 // ✅ Login Form Handling
 document.addEventListener("DOMContentLoaded", async function () {
     const loginForm = document.getElementById("loginForm");
@@ -78,12 +89,20 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        errorBox.innerHTML = "Logging in...";
+        errorBox.innerHTML = "Checking email...";
         errorBox.style.color = "#000";
-        loginButton.innerHTML = "Logging in...";
+        loginButton.innerHTML = "Checking...";
         loginButton.disabled = true;
 
         try {
+            // 🔥 **Check if Email Exists Before Trying to Login**
+            const emailExists = await checkEmailExists(auth, email);
+            if (!emailExists) {
+                throw { code: "auth/user-not-found" }; // 🔹 Fake error to trigger message
+            }
+
+            // 🔥 **If email exists, try to login**
+            errorBox.innerHTML = "Logging in...";
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("✅ Login successful!", userCredential);
 
