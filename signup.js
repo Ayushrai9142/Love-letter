@@ -37,6 +37,11 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
+// ✅ Function to Clean Firebase Errors
+function cleanErrorMessage(errorMessage) {
+    return errorMessage.replace("Firebase:", "").replace(/\(auth\/.*\)/, "").trim();
+}
+
 // ✅ Signup Form Handling
 document.addEventListener("DOMContentLoaded", async function () {
     const signupForm = document.getElementById("signupForm");
@@ -77,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Signup Error:", error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${error.message}`;
+            errorBox.innerHTML = `❌ ${cleanErrorMessage(error.message)}`;
         } finally {
             signupButton.innerHTML = "Sign Up";
             signupButton.disabled = false;
