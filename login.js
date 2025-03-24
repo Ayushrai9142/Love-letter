@@ -51,10 +51,10 @@ function getCustomErrorMessage(error) {
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
         "auth/invalid-login-credentials": "⚠️ Invalid email or password. Please try again!",
-        "auth/weak-password": "⚠️ Password should be at least 6 characters long!"
+        "auth/weak-password": "⚠️ Password must be at least 6 characters long!"
     };
 
-    // ✅ Firebase prefix hata ke error message return karna
+    // ✅ Firebase ka naam hata ke error message return karna
     return errorMessages[error.code] || "⚠️ Something went wrong. Please try again.";
 }
 
@@ -77,8 +77,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         const errorBox = document.getElementById("error-message");
         const loginButton = event.target.querySelector("button");
 
-        if (!email || !password) {
-            errorBox.innerHTML = "⚠️ Email aur password likho!";
+        if (!email) {
+            errorBox.innerHTML = "⚠️ Please enter your email!";
+            errorBox.style.color = "#ff4e50";
+            return;
+        }
+
+        if (!password) {
+            errorBox.innerHTML = "⚠️ Please enter your password!";
+            errorBox.style.color = "#ff4e50";
             return;
         }
 
