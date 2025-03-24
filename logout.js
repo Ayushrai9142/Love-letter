@@ -1,45 +1,37 @@
-import { getAuth, signOut } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
-// ✅ Firebase Initialize Karna (Ek hi baar call hoga)
-let auth = null;
+// ✅ Firebase Initialization
 async function initializeFirebase() {
-    if (auth) return auth; // Agar already initialized hai toh wahi return karega
+    const response = await fetch("/.netlify/functions/firebaseConfig");
+    const { firebaseConfig } = await response.json();
+    const app = initializeApp(firebaseConfig);
+    return getAuth(app);
+}
+
+// ✅ Logout Function
+async function handleLogout() {
     try {
-        const response = await fetch("/.netlify/functions/firebaseConfig");
-        const firebaseConfig = await response.json();
-        const app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        console.log("✅ Firebase Initialized for Logout!"); // Debugging ke liye
-        return auth;
+        const auth = await initializeFirebase();
+        await signOut(auth);
+
+        // ✅ Session Storage & Local Storage Clear
+        sessionStorage.clear();
+        localStorage.clear();
+
+        console.log("✅ User logged out successfully!");
+        
+        // ✅ Redirect to Login Page
+        window.location.href = "login.html";
     } catch (error) {
-        console.error("🚨 Firebase Initialization Failed:", error);
-        return null;
+        console.error("🚨 Logout Error:", error.message);
     }
 }
 
-// ✅ Logout Button Click Event
-document.addEventListener("DOMContentLoaded", async function () {
+// ✅ Logout Button Event Listener
+document.addEventListener("DOMContentLoaded", function () {
     const logoutButton = document.getElementById("logoutButton");
-    if (!logoutButton) return; // Agar button nahi mila toh kuch mat karo
-
-    logoutButton.addEventListener("click", async function () {
-        console.log("✅ Logout button clicked!"); // Debugging ke liye
-
-        const authInstance = await initializeFirebase();
-        if (!authInstance) {
-            console.error("🚨 Firebase not initialized, cannot log out.");
-            return;
-        }
-
-        signOut(authInstance)
-            .then(() => {
-                sessionStorage.removeItem("loggedIn"); // ✅ Login session remove karein
-                console.log("✅ User logged out successfully!");
-                window.location.href = "login.html"; // ✅ Redirect to login page
-            })
-            .catch((error) => {
-                console.error("🚨 Logout Error:", error.message);
-            });
-    });
+    if (logoutButton) {
+        logoutButton.addEventListener("click", handleLogout);
+    }
 });
