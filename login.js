@@ -47,7 +47,8 @@ function getCustomErrorMessage(errorCode) {
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
         "auth/invalid-login-credentials": "⚠️ Invalid email or password!",
-        "auth/weak-password": "⚠️ Password must be at least 6 characters long!"
+        "auth/weak-password": "⚠️ Password must be at least 6 characters long!",
+        "auth/email-not-registered": "⚠️ This email is not registered. Sign up first!"
     };
 
     return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
@@ -111,7 +112,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // ✅ Extract Only Error Code Properly
             const errorCode = error.code.replace("auth/", "").trim();
-            const errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
+            
+            let errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
+
+            // ✅ Agar new email ho toh "Email Not Registered" ka message dikhao
+            if (error.code === "auth/user-not-found") {
+                errorMessage = "⚠️ This email is not registered. Sign up first!";
+            }
+
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
