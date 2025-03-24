@@ -46,9 +46,10 @@ function getCustomErrorMessage(errorCode) {
         "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
+        "auth/invalid-login-credentials": "⚠️ Invalid email or password. Please try again!"
     };
 
-    return errorMessages[errorCode] || "⚠️ Unknown error occurred! Try again.";
+    return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
 }
 
 // ✅ Login Form Handling
@@ -92,9 +93,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error);  // 🔍 Debugging ke liye poora error print hoga
+            console.error("🚨 Login Error:", error.code);  // 🔍 Debugging ke liye error print
 
-            const errorMessage = getCustomErrorMessage(error?.code);
+            const errorMessage = getCustomErrorMessage(error.code);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
