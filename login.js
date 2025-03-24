@@ -38,16 +38,16 @@ async function initializeFirebase() {
 // ✅ Custom Error Messages Mapping
 function getCustomErrorMessage(errorCode) {
     const errorMessages = {
-        "user-not-found": "⚠️ No account found. Please sign up first!",
-        "wrong-password": "⚠️ Incorrect password! Try again.",
-        "invalid-email": "⚠️ Invalid email format!",
-        "user-disabled": "⚠️ This account is disabled!",
-        "missing-password": "⚠️ Please enter your password!",
-        "network-request-failed": "⚠️ Network error! Check your internet connection.",
-        "too-many-requests": "⚠️ Too many failed attempts. Try again later!",
-        "internal-error": "⚠️ Something went wrong on the server. Try again later!",
-        "invalid-credential": "⚠️ Invalid email or password!",
-        "weak-password": "⚠️ Password must be at least 6 characters long!"
+        "auth/user-not-found": "⚠️ No account found. Please sign up first!",
+        "auth/wrong-password": "⚠️ Incorrect password! Try again.",
+        "auth/invalid-email": "⚠️ Invalid email format!",
+        "auth/user-disabled": "⚠️ This account is disabled!",
+        "auth/missing-password": "⚠️ Please enter your password!",
+        "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
+        "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
+        "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
+        "auth/invalid-login-credentials": "⚠️ Invalid email or password!",
+        "auth/weak-password": "⚠️ Password must be at least 6 characters long!"
     };
 
     return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
@@ -109,9 +109,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code);
 
-            // ✅ Extract Only Error Code
+            // ✅ Extract Only Error Code Properly
             const errorCode = error.code.replace("auth/", "").trim();
-            const errorMessage = getCustomErrorMessage(errorCode);
+            const errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
