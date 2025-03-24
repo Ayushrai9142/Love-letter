@@ -36,7 +36,11 @@ async function initializeFirebase() {
 }
 
 // ✅ Function to Convert Firebase Errors to Custom Messages
-function getCustomErrorMessage(errorCode) {
+function getCustomErrorMessage(error) {
+    console.log("🔍 Firebase Error Object:", error); // Debugging ke liye
+
+    if (!error || !error.code) return "⚠️ Unknown error occurred! Try again.";
+
     const errorMessages = {
         "auth/user-not-found": "⚠️ No account found with this email. Sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
@@ -50,7 +54,8 @@ function getCustomErrorMessage(errorCode) {
         "auth/weak-password": "⚠️ Password should be at least 6 characters long!"
     };
 
-    return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
+    // ✅ Firebase prefix hata ke error message return karna
+    return errorMessages[error.code] || "⚠️ Something went wrong. Please try again.";
 }
 
 // ✅ Login Form Handling
@@ -94,9 +99,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error.code);  // 🔍 Debugging ke liye error print
+            console.error("🚨 Login Error:", error.code, error.message);
 
-            const errorMessage = getCustomErrorMessage(error.code);
+            const errorMessage = getCustomErrorMessage(error);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
