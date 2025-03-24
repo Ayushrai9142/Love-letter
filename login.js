@@ -37,6 +37,7 @@ async function initializeFirebase() {
 
 // ✅ Function to Convert Firebase Errors to Custom Messages
 function getCustomErrorMessage(error) {
+    console.log("🔍 Firebase Error Object:", error); // Debugging ke liye
     if (!error || !error.code) return "⚠️ Unknown error occurred! Try again.";
 
     const errorMessages = {
@@ -45,10 +46,12 @@ function getCustomErrorMessage(error) {
         "auth/invalid-email": "⚠️ Please enter a valid email address!",
         "auth/user-disabled": "⚠️ This account has been disabled!",
         "auth/missing-password": "⚠️ Please enter your password!",
-        "auth/network-request-failed": "⚠️ Network error! Check your internet connection."
+        "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
+        "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
+        "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
     };
 
-    return errorMessages[error.code] || "⚠️ Something went wrong! Try again.";
+    return errorMessages[error.code] || "⚠️ Unknown error occurred! Try again.";
 }
 
 // ✅ Login Form Handling
