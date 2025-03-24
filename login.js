@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code, error.message);
             errorBox.style.color = "#ff4e50";
+            const errorMessage = error.message.replace("Firebase: ", "").trim();
             errorBox.innerHTML = `❌ ${error.message}`;
         } finally {
             loginButton.innerHTML = "Login";
