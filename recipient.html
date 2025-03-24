@@ -17,11 +17,28 @@
         gtag('config', 'G-SJWLXHTLJL');
     </script>
 
-    <script>
-        // ✅ **Check if User is Logged In**
-        if (!sessionStorage.getItem("loggedIn")) {
-            window.location.href = "login.html"; // 🔄 Redirect to login if not logged in
+    <!-- Firebase CDN -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+
+    <script type="module">
+        // ✅ Firebase Authentication Check
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+        async function checkAuth() {
+            const response = await fetch("/.netlify/functions/firebaseConfig");
+            const { firebaseConfig } = await response.json();
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = "login.html"; // 🚨 Redirect to login if not authenticated
+                }
+            });
         }
+        checkAuth();
     </script>
 </head>
 <body>
@@ -33,19 +50,15 @@
             </p>
 
             <form id="recipientForm">
-                <!-- Your Name (Mandatory) -->
                 <label for="yourName">Your Name: <span class="required-star">*</span></label>
                 <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
 
-                <!-- Recipient Name (Optional) -->
                 <label for="recipientName">Recipient's Name:</label>
                 <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
 
-                <!-- Custom Message (Optional) -->
                 <label for="customMessage">Custom Message (Optional):</label>
                 <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
 
-                <!-- Next Button -->
                 <button type="submit" class="get-started">Next</button>
             </form>
         </div>
@@ -55,40 +68,30 @@
         document.getElementById("recipientForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
-            // Input Fields
             let yourName = document.getElementById("yourName").value.trim();
             let recipientName = document.getElementById("recipientName").value.trim();
             let customMessage = document.getElementById("customMessage").value.trim();
 
-            // Validation: Your Name Required
             if (!yourName.replace(/\s/g, '').length) {
                 alert("Please enter your name. This field is required!");
                 return;
             }
 
-            // Custom Message Length Validation
-            if (customMessage.length > 300) { // 300 characters limit
+            if (customMessage.length > 300) {
                 alert("Your custom message is too long! Please keep it under 300 characters.");
                 return;
             }
 
-            // Store Data in Local Storage
             localStorage.setItem("yourName", yourName);
             localStorage.setItem("recipientName", recipientName);
             localStorage.setItem("customMessage", customMessage);
 
-            // ✅ **Recipient details ko silently backend pe send karna**
             fetch("/.netlify/functions/sendRecipientDetails", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    sender: yourName, 
-                    recipient: recipientName,
-                    message: customMessage // ✅ Fix: Message backend pe bhej diya
-                })
+                body: JSON.stringify({ sender: yourName, recipient: recipientName, message: customMessage })
             }).catch(error => console.error("Error sending recipient details:", error));
 
-            // ✅ **Redirect to Payment Page with URL Parameters**
             let encodedMessage = encodeURIComponent(customMessage);
             window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
         });
