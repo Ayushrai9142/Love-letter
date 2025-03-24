@@ -35,27 +35,22 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
-// ✅ Function to Convert Firebase Errors to Custom Messages
-function getCustomErrorMessage(error) {
-    console.log("🔍 Firebase Error Object:", error); // Debugging ke liye
-
-    if (!error || !error.code) return "⚠️ Unknown error occurred! Try again.";
-
+// ✅ Custom Error Messages Mapping
+function getCustomErrorMessage(errorCode) {
     const errorMessages = {
-        "auth/user-not-found": "⚠️ No account found with this email. Sign up first!",
+        "auth/user-not-found": "⚠️ No account found. Please sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
-        "auth/invalid-email": "⚠️ Please enter a valid email address!",
-        "auth/user-disabled": "⚠️ This account has been disabled!",
+        "auth/invalid-email": "⚠️ Invalid email format!",
+        "auth/user-disabled": "⚠️ This account is disabled!",
         "auth/missing-password": "⚠️ Please enter your password!",
         "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
-        "auth/invalid-login-credentials": "⚠️ Invalid email or password. Please try again!",
+        "auth/invalid-credential": "⚠️ Invalid email or password!",
         "auth/weak-password": "⚠️ Password must be at least 6 characters long!"
     };
 
-    // ✅ Firebase ka naam hata ke error message return karna
-    return errorMessages[error.code] || "⚠️ Something went wrong. Please try again.";
+    return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
 }
 
 // ✅ Login Form Handling
@@ -106,9 +101,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error.code, error.message);
+            console.error("🚨 Login Error:", error.code);
 
-            const errorMessage = getCustomErrorMessage(error);
+            const errorMessage = getCustomErrorMessage(error.code);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
