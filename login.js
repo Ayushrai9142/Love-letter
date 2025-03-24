@@ -92,9 +92,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error.code, error.message);
+            console.error("🚨 Login Error:", error);  // 🔍 Debugging ke liye poora error print hoga
+
+            const errorMessage = getCustomErrorMessage(error?.code);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error.code)}`;
+            errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
