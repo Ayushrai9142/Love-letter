@@ -20,8 +20,6 @@ async function getFirebaseConfig() {
 // ✅ Firebase Initialization Function
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
-    console.log("🔥 Firebase Config:", firebaseConfig);
-
     if (!firebaseConfig || !firebaseConfig.apiKey) {
         console.error("🚨 Firebase Config Load Failed! API key missing.");
         return null;
@@ -37,9 +35,16 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
-// ✅ Function to Clean Firebase Errors
-function cleanErrorMessage(errorMessage) {
-    return errorMessage.replace("Firebase:", "").replace(/\(auth\/.*\)/, "").trim();
+// ✅ Function to Convert Firebase Errors to Custom Messages
+function getCustomErrorMessage(errorCode) {
+    const errorMessages = {
+        "auth/user-not-found": "⚠️ No account found with this email. Sign up first!",
+        "auth/wrong-password": "⚠️ Incorrect password! Try again.",
+        "auth/invalid-email": "⚠️ Please enter a valid email address!",
+        "auth/user-disabled": "⚠️ This account has been disabled!",
+        "auth/network-request-failed": "⚠️ Network error! Check your internet connection."
+    };
+    return errorMessages[errorCode] || "⚠️ Something went wrong! Try again.";
 }
 
 // ✅ Login Form Handling
@@ -85,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${cleanErrorMessage(error.message)}`;
+            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error.code)}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
