@@ -1,4 +1,4 @@
-// Firebase SDK Import
+// ✅ Firebase SDK Import
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -20,8 +20,6 @@ async function getFirebaseConfig() {
 // ✅ Initialize Firebase After Fetching Config
 async function initializeFirebase() {
     const firebaseConfig = await getFirebaseConfig();
-    console.log("🔥 Firebase Config:", firebaseConfig);
-
     if (!firebaseConfig || !firebaseConfig.apiKey) {
         console.error("🚨 Firebase Config Load Failed! API key missing.");
         return null;
@@ -37,9 +35,16 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
-// ✅ Function to Clean Firebase Errors
-function cleanErrorMessage(errorMessage) {
-    return errorMessage.replace("Firebase:", "").replace(/\(auth\/.*\)/, "").trim();
+// ✅ Function to Convert Firebase Errors to Custom Messages
+function getCustomErrorMessage(errorCode) {
+    const errorMessages = {
+        "auth/email-already-in-use": "⚠️ This email is already registered. Try logging in!",
+        "auth/weak-password": "⚠️ Password must be at least 6 characters!",
+        "auth/invalid-email": "⚠️ Please enter a valid email address!",
+        "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
+        "auth/internal-error": "⚠️ An unexpected error occurred. Try again later."
+    };
+    return errorMessages[errorCode] || "⚠️ Something went wrong! Try again.";
 }
 
 // ✅ Signup Form Handling
@@ -82,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Signup Error:", error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${cleanErrorMessage(error.message)}`;
+            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error.code)}`;
         } finally {
             signupButton.innerHTML = "Sign Up";
             signupButton.disabled = false;
