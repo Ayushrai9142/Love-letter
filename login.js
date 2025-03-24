@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code, error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error)}`;
+            errorBox.innerHTML = `❌ ${error.message}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
