@@ -36,10 +36,7 @@ async function initializeFirebase() {
 }
 
 // ✅ Function to Convert Firebase Errors to Custom Messages
-function getCustomErrorMessage(error) {
-    console.log("🔍 Firebase Error Object:", error); // Debugging ke liye
-    if (!error || !error.code) return "⚠️ Unknown error occurred! Try again.";
-
+function getCustomErrorMessage(errorCode) {
     const errorMessages = {
         "auth/user-not-found": "⚠️ No account found with this email. Sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
@@ -51,7 +48,7 @@ function getCustomErrorMessage(error) {
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
     };
 
-    return errorMessages[error.code] || "⚠️ Unknown error occurred! Try again.";
+    return errorMessages[errorCode] || "⚠️ Unknown error occurred! Try again.";
 }
 
 // ✅ Login Form Handling
@@ -97,8 +94,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code, error.message);
             errorBox.style.color = "#ff4e50";
-            const errorMessage = error.message.replace("Firebase: ", "").trim();
-            errorBox.innerHTML = `❌ ${error.message}`;
+            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error.code)}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
