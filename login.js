@@ -103,7 +103,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.code);
 
-            const errorMessage = getCustomErrorMessage(error.code);
+            // ✅ **Only Extract Error Code, Ignore Extra Messages**
+            const errorCode = error.code.replace("auth/", "").trim();
+            const errorMessage = getCustomErrorMessage(errorCode);
             errorBox.style.color = "#ff4e50";
             errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
