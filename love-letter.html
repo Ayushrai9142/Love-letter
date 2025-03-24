@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <!-- Google Site Verification -->
-<meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SJWLXHTLJL'); // Apni Google Analytics Tracking ID replace karo
-</script>
     <title>Love Letter</title>
     <link rel="stylesheet" href="love-style.css">
+
+    <!-- ✅ Google Site Verification -->
+    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
+
+    <!-- ✅ Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SJWLXHTLJL'); // Apni Google Analytics Tracking ID replace karo
+    </script>
+
+    <!-- ✅ Firebase CDN -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 </head>
 <body>
 
@@ -33,6 +38,34 @@
 
         <p id="secret" class="secret"></p>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+        // ✅ Firebase Config Fetch Function
+        async function getFirebaseConfig() {
+            const response = await fetch("/.netlify/functions/firebaseConfig");
+            const { firebaseConfig } = await response.json();
+            return firebaseConfig;
+        }
+
+        // ✅ Initialize Firebase and Check Authentication
+        async function checkAuth() {
+            const firebaseConfig = await getFirebaseConfig();
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    // ✅ User not logged in, redirect to login page
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        checkAuth(); // Call authentication check function
+    </script>
 
     <script src="love-script.js"></script>
 </body>
