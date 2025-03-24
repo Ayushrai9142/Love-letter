@@ -1,6 +1,6 @@
 // ✅ Firebase SDK Import
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // ✅ Firebase Config Fetch Function
 async function getFirebaseConfig() {
@@ -35,13 +35,10 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
-// ✅ Function to Convert Firebase Errors to Custom Messages
-function getCustomErrorMessage(error) {
-    console.log("🔍 Firebase Error Object:", error); // Debugging ke liye
-    if (!error || !error.code) return "⚠️ Something went wrong! Try again.";
-
+// ✅ Custom Error Messages
+function getCustomErrorMessage(errorCode) {
     const errorMessages = {
-        "auth/user-not-found": "⚠️ No account found with this email. <a href='signup.html'>Create an account</a>!",  // ✅ FIXED
+        "auth/user-not-found": "⚠️ This email is not registered. Sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
         "auth/invalid-email": "⚠️ Please enter a valid email address!",
         "auth/user-disabled": "⚠️ This account has been disabled!",
@@ -49,20 +46,11 @@ function getCustomErrorMessage(error) {
         "auth/network-request-failed": "⚠️ Network error! Check your internet connection.",
         "auth/too-many-requests": "⚠️ Too many failed attempts. Try again later!",
         "auth/internal-error": "⚠️ Something went wrong on the server. Try again later!",
+        "auth/invalid-login-credentials": "⚠️ Invalid email or password!",
+        "auth/email-not-registered": "⚠️ This email is not registered. Sign up first!"
     };
 
-    return errorMessages[error.code] || "⚠️ Unknown error occurred! Try again.";
-}
-
-// ✅ Function to Check If Email Exists
-async function checkEmailExists(auth, email) {
-    try {
-        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-        return signInMethods.length > 0; // True if email exists
-    } catch (error) {
-        console.error("🚨 Error checking email existence:", error);
-        return false;
-    }
+    return errorMessages[errorCode] || "⚠️ Something went wrong. Please try again.";
 }
 
 // ✅ Login Form Handling
@@ -84,25 +72,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         const errorBox = document.getElementById("error-message");
         const loginButton = event.target.querySelector("button");
 
-        if (!email || !password) {
-            errorBox.innerHTML = "⚠️ Email aur password likho!";
+        if (!email) {
+            errorBox.innerHTML = "⚠️ Please enter your email!";
+            errorBox.style.color = "#ff4e50";
             return;
         }
 
-        errorBox.innerHTML = "Checking email...";
+        if (!password) {
+            errorBox.innerHTML = "⚠️ Please enter your password!";
+            errorBox.style.color = "#ff4e50";
+            return;
+        }
+
+        if (password.length < 6) {
+            errorBox.innerHTML = "⚠️ Password must be at least 6 characters long!";
+            errorBox.style.color = "#ff4e50";
+            return;
+        }
+
+        errorBox.innerHTML = "Logging in...";
         errorBox.style.color = "#000";
-        loginButton.innerHTML = "Checking...";
+        loginButton.innerHTML = "Logging in...";
         loginButton.disabled = true;
 
         try {
-            // 🔥 **Check if Email Exists Before Trying to Login**
-            const emailExists = await checkEmailExists(auth, email);
-            if (!emailExists) {
-                throw { code: "auth/user-not-found" }; // 🔹 Fake error to trigger message
-            }
-
-            // 🔥 **If email exists, try to login**
-            errorBox.innerHTML = "Logging in...";
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("✅ Login successful!", userCredential);
 
@@ -114,12 +107,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error.code, error.message);
+            console.error("🚨 Login Error:", error.code);
+
+            // ✅ Firebase ke error code se sirf last part extract karna
+            let errorCode = error.code.split("/").pop().trim();
+
+            // ✅ Agar errorCode defined nahi hai toh default message do
+            let errorMessage = getCustomErrorMessage(`auth/${errorCode}`);
+
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error)}`;
+            errorBox.innerHTML = `❌ ${errorMessage}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
         }
     });
 });
+
