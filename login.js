@@ -36,15 +36,19 @@ async function initializeFirebase() {
 }
 
 // ✅ Function to Convert Firebase Errors to Custom Messages
-function getCustomErrorMessage(errorCode) {
+function getCustomErrorMessage(error) {
+    if (!error || !error.code) return "⚠️ Unknown error occurred! Try again.";
+
     const errorMessages = {
         "auth/user-not-found": "⚠️ No account found with this email. Sign up first!",
         "auth/wrong-password": "⚠️ Incorrect password! Try again.",
         "auth/invalid-email": "⚠️ Please enter a valid email address!",
         "auth/user-disabled": "⚠️ This account has been disabled!",
+        "auth/missing-password": "⚠️ Please enter your password!",
         "auth/network-request-failed": "⚠️ Network error! Check your internet connection."
     };
-    return errorMessages[errorCode] || "⚠️ Something went wrong! Try again.";
+
+    return errorMessages[error.code] || "⚠️ Something went wrong! Try again.";
 }
 
 // ✅ Login Form Handling
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const loginForm = document.getElementById("loginForm");
     if (!loginForm) return;
 
-    const auth = await initializeFirebase(); // 🔥 Firebase Init (Ab auth null nahi hoga)
+    const auth = await initializeFirebase();
     if (!auth) {
         console.error("🚨 Firebase Auth not initialized!");
         return;
@@ -83,14 +87,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             errorBox.style.color = "#28a745";
             errorBox.innerHTML = "✅ Login successful! Redirecting...";
 
-            sessionStorage.setItem("loggedIn", "true"); // ✅ Login session store
+            sessionStorage.setItem("loggedIn", "true");
             setTimeout(() => {
-                window.location.href = "index.html";  // ✅ Login ke baad index.html open hoga
+                window.location.href = "index.html";
             }, 2000);
         } catch (error) {
-            console.error("🚨 Login Error:", error.message);
+            console.error("🚨 Login Error:", error.code, error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error.code)}`;
+            errorBox.innerHTML = `❌ ${getCustomErrorMessage(error)}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
