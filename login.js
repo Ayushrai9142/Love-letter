@@ -37,6 +37,11 @@ async function initializeFirebase() {
     return getAuth(app);
 }
 
+// ✅ Function to Clean Firebase Errors
+function cleanErrorMessage(errorMessage) {
+    return errorMessage.replace("Firebase:", "").replace(/\(auth\/.*\)/, "").trim();
+}
+
 // ✅ Login Form Handling
 document.addEventListener("DOMContentLoaded", async function () {
     const loginForm = document.getElementById("loginForm");
@@ -80,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) {
             console.error("🚨 Login Error:", error.message);
             errorBox.style.color = "#ff4e50";
-            errorBox.innerHTML = `❌ ${error.message}`;
+            errorBox.innerHTML = `❌ ${cleanErrorMessage(error.message)}`;
         } finally {
             loginButton.innerHTML = "Login";
             loginButton.disabled = false;
