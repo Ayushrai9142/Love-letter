@@ -3,94 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
-    
-    <title>Recipient Details</title>
+    <title>Payment Instructions</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL');
-    </script>
 
-    <script>
-        // ✅ **Check if User is Logged In**
-        if (!sessionStorage.getItem("loggedIn")) {
-            window.location.href = "login.html"; // 🔄 Redirect to login if not logged in
-        }
-    </script>
+    <!-- ✅ Google Site Verification -->
+    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik " />
+
+    <!-- ✅ Firebase CDN -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="recipient-box">
-            <h1>💖 Customize Your Love Letter 💖</h1>
-            <p class="love-text">
-                Fill in the details below to create a special love letter for your soulmate.
-            </p>
+        <h2>Complete Your Payment</h2>
+        <p>Please make the payment using the following details:</p>
+        <p><strong>UPI ID:</strong> 9555829232@ybl</p>
+        <p><strong>Bank Account:</strong> 1234567890 (SBI)</p>
+        <p><strong>QR Code:</strong> Scan below to pay.</p>
+        <img src="qr-code.png" alt="QR Code" class="qr-code">
+        
+        <h3>Once done, submit the payment details:</h3>
+        <form id="paymentForm">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
 
-            <form id="recipientForm">
-                <!-- Your Name (Mandatory) -->
-                <label for="yourName">Your Name: <span class="required-star">*</span></label>
-                <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+            <label for="txn-id">Transaction ID:</label>
+            <input type="text" id="txn-id" name="txn_id" required>
 
-                <!-- Recipient Name (Optional) -->
-                <label for="recipientName">Recipient's Name:</label>
-                <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
 
-                <!-- Custom Message (Optional) -->
-                <label for="customMessage">Custom Message (Optional):</label>
-                <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
+            <label for="phone">Your Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
 
-                <!-- Next Button -->
-                <button type="submit" class="get-started">Next</button>
-            </form>
-        </div>
+            <button type="submit" class="submit-btn">Submit Payment Details</button>
+        </form>
     </div>
 
-    <script>
-        document.getElementById("recipientForm").addEventListener("submit", async function(event) {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+        // ✅ Firebase Config Fetch Function
+        async function getFirebaseConfig() {
+            const response = await fetch("/.netlify/functions/firebaseConfig");
+            const { firebaseConfig } = await response.json();
+            return firebaseConfig;
+        }
+
+        // ✅ Initialize Firebase and Check Authentication
+        async function checkAuth() {
+            const firebaseConfig = await getFirebaseConfig();
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    // ✅ User not logged in, redirect to login page
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        checkAuth(); // Call authentication check function
+
+        // ✅ Payment Form Submission Logic
+        document.getElementById("paymentForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
-            // Input Fields
-            let yourName = document.getElementById("yourName").value.trim();
-            let recipientName = document.getElementById("recipientName").value.trim();
-            let customMessage = document.getElementById("customMessage").value.trim();
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get("sender") || "Your Admirer";
+            const recipientName = urlParams.get("recipient") || "My Love";
+            const customMessage = urlParams.get("message") ? decodeURIComponent(urlParams.get("message")) : "";
 
-            // Validation: Your Name Required
-            if (!yourName.replace(/\s/g, '').length) {
-                alert("Please enter your name. This field is required!");
-                return;
+            const formData = {
+                name: document.getElementById("name").value,
+                txn_id: document.getElementById("txn-id").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                sender: senderName,
+                recipient: recipientName,
+                message: customMessage
+            };
+
+            try {
+                const response = await fetch("/.netlify/functions/paymentHandler", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                alert(result.message);
+                if (response.ok) {
+                    window.location.href = `confirmation.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodeURIComponent(customMessage)}`;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Please try again.");
             }
-
-            // Custom Message Length Validation
-            if (customMessage.length > 300) { // 300 characters limit
-                alert("Your custom message is too long! Please keep it under 300 characters.");
-                return;
-            }
-
-            // Store Data in Local Storage
-            localStorage.setItem("yourName", yourName);
-            localStorage.setItem("recipientName", recipientName);
-            localStorage.setItem("customMessage", customMessage);
-
-            // ✅ **Recipient details ko silently backend pe send karna**
-            fetch("/.netlify/functions/sendRecipientDetails", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    sender: yourName, 
-                    recipient: recipientName,
-                    message: customMessage // ✅ Fix: Message backend pe bhej diya
-                })
-            }).catch(error => console.error("Error sending recipient details:", error));
-
-            // ✅ **Redirect to Payment Page with URL Parameters**
-            let encodedMessage = encodeURIComponent(customMessage);
-            window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
         });
     </script>
 </body>
