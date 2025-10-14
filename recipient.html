@@ -93,7 +93,7 @@
             }).catch(error => console.error("Error sending recipient details:", error));
 
             let encodedMessage = encodeURIComponent(customMessage);
-            window.location.href = `payment.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
+            window.location.href = `confirmation.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
         });
     </script>
 </body>
