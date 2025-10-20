@@ -17,14 +17,14 @@ exports.handler = async function(event) {
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "ayushrai7533@gmail.com",  
+                user: "ayushrai@gmail.com",  
                 pass: "byiz iopt ceyr vzzy",  // ⚠ Use App Password Here
             },
         });
 
         let mailOptions = {
-            from: "ayushrai7533@gmail.com",
-            to: "ayushrai7533@gmail.com",  
+            from: "ayushrai@gmail.com",
+            to: "ayushrai@gmail.com",  
             subject: "New Payment Received 💰",
             text: `🎉 You have received a new payment! 🎉\n\n
             🛒 **Payment Details:**\n
