@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
+
     <title>Love Letter Service</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -16,6 +22,7 @@
             --color-footer: #ffe0de;
             --color-hero: linear-gradient(135deg, #ffe0e0, #ffdede);
         }
+
         [data-theme="dark"] {
             --color-bg: #1c1c1c;
             --color-text: #f1f1f1;
@@ -27,124 +34,174 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: var(--color-bg);
             color: var(--color-text);
             line-height: 1.6;
             transition: background 0.3s, color 0.3s;
             scroll-behavior: smooth;
-            overflow-x:hidden;
         }
 
         header {
-            display:flex; justify-content:space-between; align-items:center;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
             padding:20px 30px;
             background:#fff;
             box-shadow:0 3px 10px rgba(0,0,0,0.1);
-            position: sticky; top:0; z-index:100;
+            position: sticky;
+            top:0;
+            z-index:100;
             transition: background 0.3s, color 0.3s;
         }
+
         [data-theme="dark"] header { background:#222; }
 
-        .logo { font-size:28px; font-weight:700; color:var(--color-primary); }
-        .header-buttons { display:flex; align-items:center; }
-        .btn {
-            margin-left:15px; padding:6px 12px; border:none; border-radius:6px;
-            font-weight:600; cursor:pointer; transition: all 0.3s;
+        header h1 { font-size:28px; color:var(--color-primary); }
+
+        #logoutButton {
+            padding:8px 16px;
+            background: var(--color-primary);
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            transition: background 0.3s;
         }
-        .btn-primary { background:var(--color-primary); color:#fff; }
-        .btn-primary:hover { background:var(--color-primary-hover); transform:scale(1.05); }
-        .btn-logout { background:#ccc; color:#333; }
-        .btn-logout:hover { background:#aaa; transform:scale(1.05); }
+
+        #logoutButton:hover { background: var(--color-primary-hover); }
+
+        #theme-toggle {
+            margin-left:15px;
+            padding:6px 12px;
+            border:none;
+            border-radius:6px;
+            background: var(--color-primary);
+            color:#fff;
+            cursor:pointer;
+            font-weight:600;
+            transition: transform 0.2s, background 0.3s;
+        }
+        #theme-toggle:hover { transform: scale(1.05); background: var(--color-primary-hover); }
 
         .hero {
-            text-align:center; padding:90px 20px;
-            background:var(--color-hero);
+            text-align:center;
+            padding:80px 20px;
+            background: var(--color-hero);
             border-bottom-left-radius:50% 10%;
             border-bottom-right-radius:50% 10%;
             transition: background 0.3s;
         }
-        .hero h1 { font-size:40px; margin-bottom:15px; }
-        .hero p { margin:20px 0; font-size:18px; }
-        .hero .btn-get-started { margin-top:25px; padding:14px 30px; font-weight:500; border-radius:10px; }
 
-        .features {
-            display:flex; flex-wrap:wrap; justify-content:center; padding:60px 20px;
+        .hero h2 { font-size:40px; margin-bottom:20px; }
+        .hero p { font-size:18px; margin-bottom:25px; }
+
+        .get-started {
+            padding:14px 30px;
+            background: var(--color-primary);
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            font-weight:500;
+            cursor:pointer;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
         }
-        .feature-box {
-            width:300px; margin:20px; padding:30px;
-            background:var(--color-card);
-            border-radius:15px; text-align:center;
-            box-shadow:0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .get-started:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+            box-shadow:0 8px 20px rgba(0,0,0,0.2);
         }
-        .feature-box:hover { transform: translateY(-7px); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+
+        .content {
+            max-width:900px;
+            margin:50px auto;
+            padding:20px;
+        }
+
+        .content p { margin-bottom:20px; }
 
         footer {
-            text-align:center; padding:30px 20px; background:var(--color-footer); margin-top:40px; font-size:16px;
+            text-align:center;
+            padding:25px 20px;
+            background: var(--color-footer);
+            margin-top:40px;
+            font-size:16px;
+            transition: background 0.3s;
         }
 
-        @media(max-width:768px){
-            .features { flex-direction:column; align-items:center; }
-            .feature-box { width:90%; }
-        }
+        [data-theme="dark"] footer { background:#1f1f1f; color:#f1f1f1; }
     </style>
 </head>
-<body data-theme="dark">
+<body>
+
     <header>
-        <div class="logo">💌 AR Love Letters 💌</div>
-        <div class="header-buttons">
-            <button class="btn btn-primary" id="themeToggle">Dark Mode</button>
-            <button class="btn btn-logout" id="logoutButton">Logout</button>
+        <h1>💌 A Special Letter for Your Loved One 💌</h1>
+        <div>
+            <button id="theme-toggle">Toggle Dark/Light</button>
+            <button id="logoutButton">Logout</button>
         </div>
     </header>
 
     <section class="hero">
-        <h1>Write the Most Heartfelt Love Letters</h1>
-        <p>Express your deepest emotions, let your heart speak, and create memories that last forever. Each letter is crafted to touch the soul of your loved one.</p>
-        <p>From sweet confessions to poetic declarations, make your love unforgettable.</p>
-        <button class="btn btn-primary btn-get-started" onclick="location.href='recipient.html'">Get Started</button>
+        <h2>Express Your Love</h2>
+        <p>Love is the most beautiful feeling in the world. Let your words make it eternal.</p>
+        <button class="get-started" onclick="location.href='recipient.html'">Get Started</button>
     </section>
 
-    <section class="features">
-        <div class="feature-box">
-            <h3>Personalized Letters</h3>
-            <p>Create letters with your unique words and feelings, making each message truly special.</p>
-        </div>
-        <div class="feature-box">
-            <h3>Beautiful Designs</h3>
-            <p>Our templates and designs make your letters visually stunning and memorable.</p>
-        </div>
-        <div class="feature-box">
-            <h3>Share Easily</h3>
-            <p>Send your love letters digitally or print them, bringing joy to your loved ones effortlessly.</p>
-        </div>
+    <section class="content">
+        <p>Love is the silent whisper in the wind, the warmth of the morning sun, and the twinkle in the stars at night.</p>
+        <p>Expressing love is an art. We help you create the perfect love letter for your special one.</p>
+        <p>Every word you choose, every emotion you express, will be woven into a heartfelt message that will touch the soul of your loved one.</p>
+        <p>Whether it’s a simple "I love you" or a deeply emotional confession, we ensure your words resonate with their heart.</p>
+        <p>Let your heart speak through words, and make your loved one feel truly special.</p>
+        <p>Your love story deserves to be written beautifully.</p>
+        <p>Start your journey now and create a timeless message that they will cherish forever.</p>
     </section>
 
     <footer>
-        💖 Made with love by AR Love Letters 💖
+        &copy; 2025 AR Love Letters. All rights reserved.
     </footer>
 
-    <!-- ✅ Functionality Scripts -->
-    <script type="module" src="logout.js"></script>
+    <!-- Firebase CDN -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 
+    <!-- Dark Mode & Logout Scripts -->
     <script>
-        // ✅ Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
+        const themeToggle = document.getElementById('theme-toggle');
+        const logoutButton = document.getElementById('logoutButton');
+
+        // ✅ Default dark mode
+        if(!localStorage.getItem('theme')){
+            document.documentElement.setAttribute('data-theme','dark');
+            localStorage.setItem('theme','dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+        }
+
         themeToggle.addEventListener('click', () => {
-            if(document.documentElement.getAttribute('data-theme') === 'light'){
-                document.documentElement.setAttribute('data-theme','dark');
-                themeToggle.textContent = 'Light Mode';
-            } else {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if(currentTheme === 'dark'){
                 document.documentElement.setAttribute('data-theme','light');
-                themeToggle.textContent = 'Dark Mode';
+                localStorage.setItem('theme','light');
+            } else {
+                document.documentElement.setAttribute('data-theme','dark');
+                localStorage.setItem('theme','dark');
             }
         });
 
-        // ✅ Login check (same as original functionality)
-        if (!sessionStorage.getItem("loggedIn")) {
-            window.location.href = "login.html"; 
+        // ✅ Logout functionality
+        logoutButton.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        });
+
+        // ✅ Redirect to login if not logged in
+        if(!sessionStorage.getItem('loggedIn')){
+            window.location.href = 'login.html';
         }
     </script>
 </body>
