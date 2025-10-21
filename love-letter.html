@@ -1,225 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Letter</title>
-    <link rel="stylesheet" href="love-style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Letter</title>
 
-    <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL');
-    </script>
+<style>
+:root {
+    --color-bg: #fdf6f0;
+    --color-text: #333;
+    --color-primary: #ff6f61;
+    --color-primary-hover: #e85c50;
+    --color-container-bg: rgba(255, 255, 255, 0.8);
+}
 
-    <!-- Firebase CDN -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+[data-theme="custom-dark"] {
+    --color-bg: #1c1c1c;
+    --color-text: #f1f1f1;
+    --color-primary: #ff8a80;
+    --color-primary-hover: #ff5252;
+    --color-container-bg: #2a2a2a;
+}
 
-    <style>
-        body {
-            font-family: 'Playfair Display', serif;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            transition: background 0.3s, color 0.3s;
-            position: relative;
-        }
+body {
+    font-family: 'Playfair Display', serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
 
-        /* Dark mode for this page only */
-        body.dark-mode {
-            background: linear-gradient(to right, #2c2c2c, #444);
-            color: #f1f1f1;
-        }
+/* Portfolio-style header */
+header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+    background:#fff;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
+header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size:32px;
+    color: var(--color-primary);
+}
 
-        .container.dark-mode {
-            background: rgba(50,50,50,0.85);
-        }
+header .header-buttons {
+    display:flex;
+    gap: 10px;
+}
 
-        .container::before {
-            content: "💌";
-            font-size: 100px;
-            position: absolute;
-            top: -20px;
-            left: -10px;
-            opacity: 0.2;
-        }
+button {
+    padding:8px 16px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    background: var(--color-primary);
+    color:#fff;
+    transition: all 0.3s;
+}
 
-        .title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 36px;
-            color: #e91e63;
-            margin-bottom: 10px;
-        }
+button:hover {
+    background: var(--color-primary-hover);
+}
 
-        .container.dark-mode .title {
-            color: #ff8a80;
-        }
+/* Container */
+.container {
+    max-width:600px;
+    margin:50px auto;
+    padding:20px;
+    background: var(--color-container-bg);
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    text-align:center;
+    position:relative;
+}
 
-        .date {
-            font-style: italic;
-            color: #555;
-        }
+.container::before {
+    content: "💌";
+    font-size:100px;
+    position:absolute;
+    top:-20px;
+    left:-10px;
+    opacity:0.2;
+}
 
-        .container.dark-mode .date {
-            color: #ddd;
-        }
+.title {
+    font-family: 'Great Vibes', cursive;
+    font-size:36px;
+    color: var(--color-primary);
+    margin-bottom:10px;
+}
 
-        .letter {
-            margin: 20px 0;
-            line-height: 1.6;
-            font-size: 18px;
-            font-weight: bold;
-            color: #444;
-        }
+.date {
+    font-style: italic;
+    color: #555;
+}
 
-        .container.dark-mode .letter {
-            color: #f1f1f1;
-        }
+.letter {
+    margin:20px 0;
+    line-height:1.6;
+    font-size:18px;
+    font-weight:bold;
+    color: var(--color-text);
+}
 
-        #revealButton {
-            display: block;
-            margin: 20px auto;
-            padding: 15px 25px;
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
-            border: none;
-            border-radius: 50px;
-            color: white;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            animation: pulse 1.5s infinite;
-        }
+.secret {
+    font-family: 'Great Vibes', cursive;
+    font-size:28px;
+    font-weight:bold;
+    color: var(--color-primary);
+    margin-top:20px;
+    opacity:0;
+    transition: opacity 1.5s ease-in-out;
+}
 
-        #revealButton:hover {
-            background: linear-gradient(45deg, #ff5e62, #ff9966);
-            transform: scale(1.1);
-        }
+#revealButton {
+    display:block;
+    margin:20px auto;
+    padding:15px 25px;
+    border-radius:50px;
+    font-size:20px;
+    animation: pulse 1.5s infinite;
+}
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
 
-        .secret {
-            font-family: 'Great Vibes', cursive;
-            font-size: 28px;
-            font-weight: bold;
-            color: #e91e63;
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-
-        .dark-mode-toggle {
-            position: fixed;
-            top: 15px;
-            right: 20px;
-            padding: 8px 16px;
-            background: #ff6f61;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1000;
-            transition: background 0.3s;
-        }
-
-        .dark-mode-toggle:hover {
-            background: #e85c50;
-        }
-    </style>
+/* Mobile friendly */
+@media(max-width:480px){
+    header h1 { font-size:28px; }
+    .container { width:90%; padding:15px; }
+    .title { font-size:28px; }
+    .letter { font-size:16px; }
+    #revealButton { font-size:18px; padding:12px 20px; }
+}
+</style>
 </head>
-<body>
 
-    <!-- Independent Dark/Light Toggle -->
-    <button class="dark-mode-toggle" id="pageThemeBtn">Dark Mode</button>
+<body data-theme="light">
 
-    <div class="container" id="letterContainer">
-        <h1 class="title">A Special Message</h1>
-        <p class="date" id="date"></p>
-        
-        <div class="letter">
-            <p id="dearText">Dear,</p>
-            <p>There are so many things I want to say, but words will never be enough to express how much I love you.</p>
-            <p>Can you define love in your own words?</p>
-            <p>Click the button below to reveal what my heart truly feels.</p>
-        </div>
+<header>
+    <h1>AR Love Letters</h1>
+    <div class="header-buttons">
+        <button id="themeToggle">Dark Mode</button>
+        <button id="logoutButton">Logout</button>
+    </div>
+</header>
 
-        <button id="revealButton">💖 Reveal <span id="senderHeart">Someone's</span> Heart 💖</button>
-
-        <p id="secret" class="secret"></p>
+<div class="container">
+    <h1 class="title">A Special Message</h1>
+    <p class="date" id="date"></p>
+    
+    <div class="letter">
+        <p id="dearText">Dear,</p>
+        <p>There are so many things I want to say, but words will never be enough to express how much I love you.</p>
+        <p>Click the button below to reveal what my heart truly feels.</p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+    <button id="revealButton">💖 Reveal <span id="senderHeart">Someone's</span> Heart 💖</button>
 
-        async function getFirebaseConfig() {
-            const response = await fetch("/.netlify/functions/firebaseConfig");
-            const { firebaseConfig } = await response.json();
-            return firebaseConfig;
-        }
+    <p id="secret" class="secret"></p>
+</div>
 
-        async function checkAuth() {
-            const firebaseConfig = await getFirebaseConfig();
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+<!-- Firebase CDN -->
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 
-            onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    window.location.href = "login.html";
-                }
-            });
-        }
+<script>
+const themeToggle = document.getElementById('themeToggle');
+const logoutButton = document.getElementById('logoutButton');
 
-        checkAuth();
-    </script>
+// ✅ Independent dark/light toggle
+themeToggle.addEventListener('click', () => {
+    if(document.body.getAttribute('data-theme') === 'light'){
+        document.body.setAttribute('data-theme', 'custom-dark');
+        themeToggle.textContent = 'Light Mode';
+    } else {
+        document.body.setAttribute('data-theme', 'light');
+        themeToggle.textContent = 'Dark Mode';
+    }
+});
 
-    <script>
-        const themeBtn = document.getElementById("pageThemeBtn");
-        const body = document.body;
-        const container = document.getElementById("letterContainer");
+// ✅ Logout
+logoutButton.addEventListener('click', () => {
+    sessionStorage.removeItem('loggedIn');
+    window.location.href = 'index.html';
+});
 
-        // Default light mode
-        let darkMode = false;
-        themeBtn.textContent = "Dark Mode";
+// ✅ Redirect if not logged in
+if(!sessionStorage.getItem('loggedIn')){
+    window.location.href = 'login.html';
+}
+</script>
 
-        themeBtn.addEventListener("click", () => {
-            darkMode = !darkMode;
-            if(darkMode){
-                body.classList.add("dark-mode");
-                container.classList.add("dark-mode");
-                themeBtn.textContent = "Light Mode";
-            } else {
-                body.classList.remove("dark-mode");
-                container.classList.remove("dark-mode");
-                themeBtn.textContent = "Dark Mode";
-            }
-        });
-    </script>
+<!-- Your existing love-script.js -->
+<script src="love-script.js"></script>
 </body>
 </html>
