@@ -140,7 +140,7 @@
 
 <script>
     const themeToggle = document.getElementById('theme-toggle');
-    const logoutButton = document.getElementById('logoutButton');
+ 
 
     // ✅ Set default dark mode if no theme is set
     if(!localStorage.getItem('theme')){
@@ -169,11 +169,7 @@
         updateToggleText();
     });
 
-    // ✅ Logout functionality
-    logoutButton.addEventListener('click', () => {
-        sessionStorage.removeItem('loggedIn');
-        window.location.href = 'login.html';
-    });
+  
 
     // ✅ Redirect to login if not logged in
     if(!sessionStorage.getItem('loggedIn')){
