@@ -1,55 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ✅ Google Site Verification -->
-    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
-
     <title>Love Letter Service</title>
-    <link rel="stylesheet" href="styles.css">  
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <!-- ✅ Google Analytics Tracking Code -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
+    <style>
+        :root {
+            --color-bg: #fdf6f0;
+            --color-text: #333;
+            --color-primary: #ff6f61;
+            --color-primary-hover: #e85c50;
+            --color-card: #ffe8e5;
+            --color-footer: #ffe0de;
+            --color-hero: linear-gradient(135deg, #ffe0e0, #ffdede);
+        }
+        [data-theme="dark"] {
+            --color-bg: #1c1c1c;
+            --color-text: #f1f1f1;
+            --color-primary: #ff8a80;
+            --color-primary-hover: #ff5252;
+            --color-card: #2a2a2a;
+            --color-footer: #1f1f1f;
+            --color-hero: linear-gradient(135deg, #333, #444);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+            overflow-x:hidden;
+        }
+
+        header {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:20px 30px;
+            background:#fff;
+            box-shadow:0 3px 10px rgba(0,0,0,0.1);
+            position: sticky; top:0; z-index:100;
+            transition: background 0.3s, color 0.3s;
+        }
+        [data-theme="dark"] header { background:#222; }
+
+        .logo { font-size:28px; font-weight:700; color:var(--color-primary); }
+        .header-buttons { display:flex; align-items:center; }
+        .btn {
+            margin-left:15px; padding:6px 12px; border:none; border-radius:6px;
+            font-weight:600; cursor:pointer; transition: all 0.3s;
+        }
+        .btn-primary { background:var(--color-primary); color:#fff; }
+        .btn-primary:hover { background:var(--color-primary-hover); transform:scale(1.05); }
+        .btn-logout { background:#ccc; color:#333; }
+        .btn-logout:hover { background:#aaa; transform:scale(1.05); }
+
+        .hero {
+            text-align:center; padding:90px 20px;
+            background:var(--color-hero);
+            border-bottom-left-radius:50% 10%;
+            border-bottom-right-radius:50% 10%;
+            transition: background 0.3s;
+        }
+        .hero h1 { font-size:40px; margin-bottom:15px; }
+        .hero p { margin:20px 0; font-size:18px; }
+        .hero .btn-get-started { margin-top:25px; padding:14px 30px; font-weight:500; border-radius:10px; }
+
+        .features {
+            display:flex; flex-wrap:wrap; justify-content:center; padding:60px 20px;
+        }
+        .feature-box {
+            width:300px; margin:20px; padding:30px;
+            background:var(--color-card);
+            border-radius:15px; text-align:center;
+            box-shadow:0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-box:hover { transform: translateY(-7px); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+
+        footer {
+            text-align:center; padding:30px 20px; background:var(--color-footer); margin-top:40px; font-size:16px;
+        }
+
+        @media(max-width:768px){
+            .features { flex-direction:column; align-items:center; }
+            .feature-box { width:90%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">💌 AR Love Letters 💌</div>
+        <div class="header-buttons">
+            <button class="btn btn-primary" id="themeToggle">Dark Mode</button>
+            <button class="btn btn-logout" id="logoutButton">Logout</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Write the Most Heartfelt Love Letters</h1>
+        <p>Express your deepest emotions, let your heart speak, and create memories that last forever. Each letter is crafted to touch the soul of your loved one.</p>
+        <p>From sweet confessions to poetic declarations, make your love unforgettable.</p>
+        <button class="btn btn-primary btn-get-started" onclick="location.href='recipient.html'">Get Started</button>
+    </section>
+
+    <section class="features">
+        <div class="feature-box">
+            <h3>Personalized Letters</h3>
+            <p>Create letters with your unique words and feelings, making each message truly special.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Beautiful Designs</h3>
+            <p>Our templates and designs make your letters visually stunning and memorable.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Share Easily</h3>
+            <p>Send your love letters digitally or print them, bringing joy to your loved ones effortlessly.</p>
+        </div>
+    </section>
+
+    <footer>
+        💖 Made with love by AR Love Letters 💖
+    </footer>
+
+    <!-- ✅ Functionality Scripts -->
+    <script type="module" src="logout.js"></script>
+
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        // ✅ Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            if(document.documentElement.getAttribute('data-theme') === 'light'){
+                document.documentElement.setAttribute('data-theme','dark');
+                themeToggle.textContent = 'Light Mode';
+            } else {
+                document.documentElement.setAttribute('data-theme','light');
+                themeToggle.textContent = 'Dark Mode';
+            }
+        });
 
-        gtag('config', 'G-SJWLXHTLJL'); // Replace G-XXXXXXXXXX with your actual Measurement ID
-    </script>
-
-    <!-- Firebase CDN Links -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
-
-    <script>
-        // ✅ Agar user logged in nahi hai toh usko login page pe redirect kar do
+        // ✅ Login check (same as original functionality)
         if (!sessionStorage.getItem("loggedIn")) {
             window.location.href = "login.html"; 
         }
     </script>
-</head>
-<body>
-    <header>
-        <h1>💌 A Special Letter for Your Loved One 💌</h1>
-        <!-- ✅ Logout Button (Top-Right Corner) -->
-        <button id="logoutButton">Logout</button>
-    </header>
-
-    <div class="love-text">
-        <p>Love is the most beautiful feeling in the world. It is the silent whisper in the wind, the warmth of the morning sun, and the twinkle in the stars at night.</p>
-        <p>Expressing love is an art, and we help you create the perfect love letter for your special one. Every word you choose, every emotion you express, will be woven into a heartfelt message that will make their heart melt.</p>
-        <p>Whether it’s a simple "I love you" or a deeply emotional confession, we make sure your words touch the soul of your loved one.</p>
-        <p>Let your heart speak through words, and make them feel truly special.</p>
-        <p>Your love story deserves to be written beautifully.</p>
-    </div>
-
-    <button class="get-started" onclick="location.href='recipient.html'">Get Started</button>
-
-    <!-- ✅ Logout ka JavaScript -->
-    <script type="module" src="logout.js"></script>
 </body>
 </html>
