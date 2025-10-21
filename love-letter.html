@@ -68,17 +68,6 @@ button {
 button:hover {
     background: var(--color-primary-hover);
 }
-    footer {
-    text-align: center;
-    padding: 25px 20px;
-    background: var(--color-primary);
-    color: #fff;
-    font-size: 16px;
-    margin-top: 40px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    transition: background 0.3s;
-    }
 
 /* Container */
 .container {
@@ -140,6 +129,7 @@ button:hover {
     animation: pulse 1.5s infinite;
 }
 
+/* Go to Homepage button */
 a.btn {
     display:inline-block;
     margin-top:20px;
@@ -164,6 +154,14 @@ a.btn:hover {
     100% { transform: scale(1); }
 }
 
+/* Footer same color as index.html */
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
 /* Mobile friendly */
 @media(max-width:480px){
     header h1 { font-size:28px; }
@@ -172,9 +170,6 @@ a.btn:hover {
     .letter { font-size:16px; }
     #revealButton { font-size:18px; padding:12px 20px; }
 }
-
-     
-    
 </style>
 </head>
 
@@ -201,17 +196,15 @@ a.btn:hover {
     <button id="revealButton">💖 Reveal <span id="senderHeart">Someone's</span> Heart 💖</button>
 
     <p id="secret" class="secret"></p>
-
-    <!-- ✅ New Go to Homepage button -->
 </div>
-    
- <center>  <a href="index.html" class="btn">Go to Homepage</a>. </center>
-    
 
-    <footer> &copy; 2025 AR Love Letters. All rights reserved. </footer>
+<!-- ✅ Go to Homepage Button (outside container) -->
+<center><a href="index.html" class="btn">Go to Homepage</a></center>
 
+<footer>
+    &copy; 2025 AR Love Letters. All rights reserved.
+</footer>
 
-    
 <!-- Firebase CDN -->
 <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
 <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
