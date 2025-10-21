@@ -6,31 +6,166 @@
     <title>Love Letter</title>
     <link rel="stylesheet" href="love-style.css">
 
-    <!-- ✅ Google Site Verification -->
+    <!-- Google Site Verification -->
     <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
 
-    <!-- ✅ Google Analytics -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL'); // Apni Google Analytics Tracking ID replace karo
+        gtag('config', 'G-SJWLXHTLJL');
     </script>
 
-    <!-- ✅ Firebase CDN -->
+    <!-- Firebase CDN -->
     <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        /* Dark mode for this page only */
+        body.dark-mode {
+            background: linear-gradient(to right, #2c2c2c, #444);
+            color: #f1f1f1;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container.dark-mode {
+            background: rgba(50,50,50,0.85);
+        }
+
+        .container::before {
+            content: "💌";
+            font-size: 100px;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            opacity: 0.2;
+        }
+
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #e91e63;
+            margin-bottom: 10px;
+        }
+
+        .container.dark-mode .title {
+            color: #ff8a80;
+        }
+
+        .date {
+            font-style: italic;
+            color: #555;
+        }
+
+        .container.dark-mode .date {
+            color: #ddd;
+        }
+
+        .letter {
+            margin: 20px 0;
+            line-height: 1.6;
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .container.dark-mode .letter {
+            color: #f1f1f1;
+        }
+
+        #revealButton {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        #revealButton:hover {
+            background: linear-gradient(45deg, #ff5e62, #ff9966);
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .secret {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            font-weight: bold;
+            color: #e91e63;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            padding: 8px 16px;
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background: #e85c50;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- Independent Dark/Light Toggle -->
+    <button class="dark-mode-toggle" id="pageThemeBtn">Dark Mode</button>
+
+    <div class="container" id="letterContainer">
         <h1 class="title">A Special Message</h1>
         <p class="date" id="date"></p>
         
         <div class="letter">
             <p id="dearText">Dear,</p>
             <p>There are so many things I want to say, but words will never be enough to express how much I love you.</p>
+            <p>Can you define love in your own words?</p>
             <p>Click the button below to reveal what my heart truly feels.</p>
         </div>
 
@@ -43,14 +178,12 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
-        // ✅ Firebase Config Fetch Function
         async function getFirebaseConfig() {
             const response = await fetch("/.netlify/functions/firebaseConfig");
             const { firebaseConfig } = await response.json();
             return firebaseConfig;
         }
 
-        // ✅ Initialize Firebase and Check Authentication
         async function checkAuth() {
             const firebaseConfig = await getFirebaseConfig();
             const app = initializeApp(firebaseConfig);
@@ -58,15 +191,35 @@
 
             onAuthStateChanged(auth, (user) => {
                 if (!user) {
-                    // ✅ User not logged in, redirect to login page
                     window.location.href = "login.html";
                 }
             });
         }
 
-        checkAuth(); // Call authentication check function
+        checkAuth();
     </script>
 
-    <script src="love-script.js"></script>
+    <script>
+        const themeBtn = document.getElementById("pageThemeBtn");
+        const body = document.body;
+        const container = document.getElementById("letterContainer");
+
+        // Default light mode
+        let darkMode = false;
+        themeBtn.textContent = "Dark Mode";
+
+        themeBtn.addEventListener("click", () => {
+            darkMode = !darkMode;
+            if(darkMode){
+                body.classList.add("dark-mode");
+                container.classList.add("dark-mode");
+                themeBtn.textContent = "Light Mode";
+            } else {
+                body.classList.remove("dark-mode");
+                container.classList.remove("dark-mode");
+                themeBtn.textContent = "Dark Mode";
+            }
+        });
+    </script>
 </body>
 </html>
