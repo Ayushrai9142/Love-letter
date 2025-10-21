@@ -3,79 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>confirmation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Confirmation - AR Love Letters</title>
 
-    <!-- ✅ Google Site Verification -->
+    <!-- Google Site Verification -->
     <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
 
-    <!-- ✅ Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL'); // Apni Google Analytics Tracking ID replace karo
-    </script>
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <!-- ✅ Firebase CDN -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+    <style>
+        :root {
+            --color-bg: #fdf6f0;
+            --color-text: #333;
+            --color-primary: #ff6f61;
+            --color-primary-hover: #e85c50;
+            --color-card: #ffe8e5;
+            --color-footer: #ffe0de;
+            --color-hero: linear-gradient(135deg, #ffe0e0, #ffdede);
+        }
+        [data-theme="dark"] {
+            --color-bg: #1c1c1c;
+            --color-text: #f1f1f1;
+            --color-primary: #ff8a80;
+            --color-primary-hover: #ff5252;
+            --color-card: #2a2a2a;
+            --color-footer: #1f1f1f;
+            --color-hero: linear-gradient(135deg, #333, #444);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 30px;
+            background:#fff;
+            box-shadow:0 3px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top:0;
+            z-index:100;
+            transition: background 0.3s, color 0.3s;
+        }
+        [data-theme="dark"] header { background:#222; }
+
+        header h1 { font-size:28px; color:var(--color-primary); }
+        #logoutButton, #theme-toggle {
+            padding:8px 16px;
+            margin-left:10px;
+            background: var(--color-primary);
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            transition: background 0.3s;
+            font-weight:500;
+        }
+        #logoutButton:hover, #theme-toggle:hover { background: var(--color-primary-hover); }
+
+        .container {
+            max-width:800px;
+            margin:80px auto 50px auto;
+            padding:30px;
+            background: var(--color-card);
+            border-radius:15px;
+            text-align:center;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] .container { background: var(--color-card); }
+
+        .container h2 { font-size:32px; margin-bottom:20px; color: var(--color-primary); }
+        .container p { font-size:18px; margin-bottom:20px; }
+        .container a.btn {
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 28px;
+            background: var(--color-primary);
+            color:#fff;
+            text-decoration:none;
+            border-radius:10px;
+            font-weight:500;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+        .container a.btn:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+            box-shadow:0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            text-align:center;
+            padding:25px 20px;
+            background: var(--color-footer);
+            font-size:16px;
+            margin-top:40px;
+            transition: background 0.3s;
+        }
+        [data-theme="dark"] footer { background:#1f1f1f; color:#f1f1f1; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2> Successfully!</h2>
-        <p>We will verify your name and send your personalized love letter link soon.</p>
-        <p>If you have any questions, contact us at: 
-            <a href="mailto:ayushrai@gmail.com">ayushrai@gmail.com</a>
-        </p>
-        <p>Click here to view your personalized love letter: 
-            <a id="loveLetterLink" href="#">Loading...</a>
-        </p>
-        <a href="index.html" class="btn">Go to Homepage</a>
+
+<header>
+    <h1>💌 AR Love Letters 💌</h1>
+    <div>
+        <button id="theme-toggle">Toggle Dark/Light</button>
+        <button id="logoutButton">Logout</button>
     </div>
+</header>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+<div class="container">
+    <h2>Submission Successful!</h2>
+    <p>We will verify your name and send your personalized love letter link soon.</p>
+    <p>If you have any questions, contact us at: 
+        <a href="mailto:ayushrai9142@gmail.com">ayushrai9142@gmail.com</a>
+    </p>
+    <p>Click here to view your personalized love letter: 
+        <a id="loveLetterLink" href="#">Loading...</a>
+    </p>
+    <a href="index.html" class="btn">Go to Homepage</a>
+</div>
 
-        // ✅ Firebase Config Fetch Function
-        async function getFirebaseConfig() {
-            const response = await fetch("/.netlify/functions/firebaseConfig");
-            const { firebaseConfig } = await response.json();
-            return firebaseConfig;
+<footer>
+    &copy; 2025 AR Love Letters. All rights reserved.
+</footer>
+
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const logoutButton = document.getElementById('logoutButton');
+
+    // ✅ Set default dark mode if no theme is set
+    if(!localStorage.getItem('theme')){
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+    }
+
+    // ✅ Toggle button: shows opposite theme text
+    function updateToggleText() {
+        const current = document.documentElement.getAttribute('data-theme');
+        themeToggle.textContent = (current === 'dark') ? 'Light Mode' : 'Dark Mode';
+    }
+    updateToggleText();
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if(currentTheme === 'dark'){
+            document.documentElement.setAttribute('data-theme','light');
+            localStorage.setItem('theme','light');
+        } else {
+            document.documentElement.setAttribute('data-theme','dark');
+            localStorage.setItem('theme','dark');
         }
+        updateToggleText();
+    });
 
-        // ✅ Initialize Firebase and Check Authentication
-        async function checkAuth() {
-            const firebaseConfig = await getFirebaseConfig();
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+    // ✅ Logout functionality
+    logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem('loggedIn');
+        window.location.href = 'login.html';
+    });
 
-            onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    // ✅ User not logged in, redirect to login page
-                    window.location.href = "login.html";
-                }
-            });
-        }
+    // ✅ Redirect to login if not logged in
+    if(!sessionStorage.getItem('loggedIn')){
+        window.location.href = 'login.html';
+    }
 
-        checkAuth(); // Call authentication check function
+    // ✅ Load user details & generate love letter link
+    setTimeout(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const senderName = urlParams.get("sender") || "Someone Special";
+        const recipientName = urlParams.get("recipient") || "Dear";
+        const customMessage = urlParams.get("message") ? decodeURIComponent(urlParams.get("message")) : "";
 
-        // ✅ Load User Details & Generate Love Letter Link
-        setTimeout(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const senderName = urlParams.get("sender") || "Someone Special";
-            const recipientName = urlParams.get("recipient") || "Dear";
-            const customMessage = urlParams.get("message") ? decodeURIComponent(urlParams.get("message")) : "";
+        const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodeURIComponent(customMessage)}`;
 
-            // ✅ Generating Love Letter URL
-            const loveLetterURL = `love-letter.html?sender=${encodeURIComponent(senderName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodeURIComponent(customMessage)}`;
+        document.getElementById("loveLetterLink").href = loveLetterURL;
+        document.getElementById("loveLetterLink").textContent = "Click here!";
+    }, 500);
+</script>
 
-            // ✅ Updating the link with correct URL
-            document.getElementById("loveLetterLink").href = loveLetterURL;
-            document.getElementById("loveLetterLink").textContent = "Click here!";
-        }, 2000);
-    </script>
 </body>
 </html>
