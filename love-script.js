@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         secretElement.style.opacity = "1"; // Show message
         revealButton.style.display = "none"; // Hide button
 
-        // Redirect after 8 seconds
+        // Redirect after 60 seconds
         setTimeout(() => {
             window.location.href = "index.html";
-        }, 8000);
+        }, 60000);
     });
 
     // Disable right-click
