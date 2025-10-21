@@ -1,198 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Recipient Details - AR Love Letters</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipient - AR Love Letters</title>
 
-  <style>
-    :root {
-      --color-bg: #fdf6f0;
-      --color-text: #333;
-      --color-primary: #ff6f61;
-      --color-primary-hover: #e85c50;
-      --color-card: #ffe8e5;
-      --color-input-bg: #fff;
-    }
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik">
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--color-bg);
-      color: var(--color-text);
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    .container {
-      width: 95%;
-      max-width: 550px;
-      background: var(--color-card);
-      padding: 35px 30px;
-      border-radius: 15px;
-      box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
-      text-align: left;
-      animation: fadeIn 1s ease-in;
-    }
-
-    .container h1 {
-      font-size:28px;
-      margin-bottom:15px;
-      text-align:center;
-    }
-
-    .container p.love-text {
-      font-size:16px;
-      margin-bottom:20px;
-      text-align:center;
-    }
-
-    form label {
-      display:block;
-      font-weight:bold;
-      font-size:16px;
-      margin-bottom:6px;
-    }
-
-    input[type="text"], textarea {
-      width:100%;
-      padding:12px;
-      border:2px solid var(--color-primary);
-      border-radius:6px;
-      font-size:16px;
-      margin-bottom:15px;
-      background: var(--color-input-bg);
-      color: var(--color-text);
-      resize:none;
-      transition: border 0.3s;
-    }
-
-    input:focus, textarea:focus {
-      border-color: var(--color-primary-hover);
-      outline:none;
-    }
-
-    .get-started {
-      display:block;
-      width:100%;
-      padding:15px;
-      background: var(--color-primary);
-      color:white;
-      font-size:18px;
-      font-weight:bold;
-      border:none;
-      border-radius:50px;
-      cursor:pointer;
-      margin-top:20px;
-      text-transform:uppercase;
-      transition: all 0.3s ease-in-out;
-      text-align:center;
-      animation: pulse 1.5s infinite;
-    }
-
-    .get-started:hover {
-      background: var(--color-primary-hover);
-      transform: scale(1.05);
-      box-shadow:0 0 15px rgba(255, 111, 97, 0.7);
-    }
-
-    .required-star { color:red; }
-
-    @media(max-width:480px){
-      .container { width:90%; padding:25px; }
-      .container h1 { font-size:24px; }
-      input, textarea { font-size:15px; }
-      .get-started { font-size:16px; padding:12px; }
-    }
-
-    @keyframes fadeIn {
-      0% { opacity:0; transform:translateY(-20px); }
-      100% { opacity:1; transform:translateY(0); }
-    }
-
-    @keyframes pulse {
-      0% { transform:scale(1); }
-      50% { transform:scale(1.05); }
-      100% { transform:scale(1); }
-    }
-  </style>
-
-  <!-- Firebase CDN -->
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
-
-    async function checkAuth() {
-      const response = await fetch("/.netlify/functions/firebaseConfig");
-      const { firebaseConfig } = await response.json();
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-
-      onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          window.location.href = "login.html";
+    <style>
+        :root {
+            --color-bg: #fdf6f0;
+            --color-text: #333;
+            --color-primary: #ff6f61;
+            --color-primary-hover: #e85c50;
+            --color-card: #ffe8e5;
+            --color-footer: #ffe0de;
         }
-      });
-    }
-    checkAuth();
-  </script>
+        [data-theme="dark"] {
+            --color-bg: #1c1c1c;
+            --color-text: #f1f1f1;
+            --color-primary: #ff8a80;
+            --color-primary-hover: #ff5252;
+            --color-card: #2a2a2a;
+            --color-footer: #1f1f1f;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 30px;
+            background:#fff;
+            box-shadow:0 3px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top:0;
+            z-index:100;
+            transition: background 0.3s, color 0.3s;
+        }
+        [data-theme="dark"] header { background:#222; }
+
+        header h1 { font-size:28px; color:var(--color-primary); }
+        #logoutButton {
+            padding:8px 16px;
+            background: var(--color-primary);
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            transition: background 0.3s;
+            font-weight:500;
+        }
+        #logoutButton:hover { background: var(--color-primary-hover); }
+
+        .container {
+            max-width:800px;
+            margin:80px auto 50px auto;
+            padding:30px;
+            background: var(--color-card);
+            border-radius:15px;
+            text-align:center;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] .container { background: var(--color-card); }
+
+        .container h2 { font-size:32px; margin-bottom:20px; color: var(--color-primary); }
+        .container p { font-size:18px; margin-bottom:20px; }
+        .container a.btn {
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 28px;
+            background: var(--color-primary);
+            color:#fff;
+            text-decoration:none;
+            border-radius:10px;
+            font-weight:500;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+        .container a.btn:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+            box-shadow:0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            text-align:center;
+            padding:25px 20px;
+            background: var(--color-footer);
+            font-size:16px;
+            margin-top:40px;
+            transition: background 0.3s;
+        }
+        [data-theme="dark"] footer { background:#1f1f1f; color:#f1f1f1; }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>💖 Customize Your Love Letter 💖</h1>
-    <p class="love-text">Fill in the details below to create a special love letter for your soulmate.</p>
 
-    <form id="recipientForm">
-      <label for="yourName">Your Name: <span class="required-star">*</span></label>
-      <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+<header>
+    <h1>💌 AR Love Letters 💌</h1>
+    <button id="logoutButton">Logout</button>
+</header>
 
-      <label for="recipientName">Recipient's Name:</label>
-      <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+<div class="container">
+    <h2>Choose Your Recipient</h2>
+    <p>Enter the name and details of the person you want to send your love letter to.</p>
+    <!-- Recipient form or details can go here -->
+    <a href="confirmation.html" class="btn">Proceed</a>
+</div>
 
-      <label for="customMessage">Custom Message (Optional):</label>
-      <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
+<footer>
+    &copy; 2025 AR Love Letters. All rights reserved.
+</footer>
 
-      <button type="submit" class="get-started">Next</button>
-    </form>
-  </div>
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 
-  <script>
-    document.getElementById("recipientForm").addEventListener("submit", async function(event) {
-      event.preventDefault();
+<script>
+    const logoutButton = document.getElementById('logoutButton');
 
-      let yourName = document.getElementById("yourName").value.trim();
-      let recipientName = document.getElementById("recipientName").value.trim();
-      let customMessage = document.getElementById("customMessage").value.trim();
+    // ✅ Apply saved theme from localStorage
+    if(localStorage.getItem('theme')){
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+    } else {
+        document.documentElement.setAttribute('data-theme','dark'); // default dark
+        localStorage.setItem('theme','dark');
+    }
 
-      if (!yourName.replace(/\s/g, '').length) {
-        alert("Please enter your name. This field is required!");
-        return;
-      }
-
-      if (customMessage.length > 300) {
-        alert("Your custom message is too long! Please keep it under 300 characters.");
-        return;
-      }
-
-      localStorage.setItem("yourName", yourName);
-      localStorage.setItem("recipientName", recipientName);
-      localStorage.setItem("customMessage", customMessage);
-
-      fetch("/.netlify/functions/sendRecipientDetails", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sender: yourName, recipient: recipientName, message: customMessage })
-      }).catch(error => console.error("Error sending recipient details:", error));
-
-      let encodedMessage = encodeURIComponent(customMessage);
-      window.location.href = `confirmation.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
+    // ✅ Logout functionality
+    logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem('loggedIn');
+        window.location.href = 'login.html';
     });
-  </script>
+
+    // ✅ Redirect to login if not logged in
+    if(!sessionStorage.getItem('loggedIn')){
+        window.location.href = 'login.html';
+    }
+</script>
+
 </body>
 </html>
