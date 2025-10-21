@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recipient Details - AR Love Letters</title>
+
   <style>
     :root {
       --color-bg: #fdf6f0;
@@ -23,7 +24,6 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      transition: background 0.3s, color 0.3s;
     }
 
     .container {
@@ -34,7 +34,6 @@
       border-radius: 15px;
       box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
       text-align: left;
-      position: relative;
       animation: fadeIn 1s ease-in;
     }
 
@@ -119,7 +118,31 @@
       100% { transform:scale(1); }
     }
   </style>
+
+  <!-- Firebase CDN -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+    async function checkAuth() {
+      const response = await fetch("/.netlify/functions/firebaseConfig");
+      const { firebaseConfig } = await response.json();
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          window.location.href = "login.html";
+        }
+      });
+    }
+    checkAuth();
+  </script>
 </head>
+
 <body>
   <div class="container">
     <h1>💖 Customize Your Love Letter 💖</h1>
@@ -139,27 +162,32 @@
     </form>
   </div>
 
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
-
   <script>
     document.getElementById("recipientForm").addEventListener("submit", async function(event) {
       event.preventDefault();
+
       let yourName = document.getElementById("yourName").value.trim();
       let recipientName = document.getElementById("recipientName").value.trim();
       let customMessage = document.getElementById("customMessage").value.trim();
 
-      if(!yourName.replace(/\s/g,'')) { alert("Please enter your name. This field is required!"); return; }
-      if(customMessage.length>300){ alert("Custom message too long! Keep under 300 chars."); return; }
+      if (!yourName.replace(/\s/g, '').length) {
+        alert("Please enter your name. This field is required!");
+        return;
+      }
+
+      if (customMessage.length > 300) {
+        alert("Your custom message is too long! Please keep it under 300 characters.");
+        return;
+      }
 
       localStorage.setItem("yourName", yourName);
       localStorage.setItem("recipientName", recipientName);
       localStorage.setItem("customMessage", customMessage);
 
       fetch("/.netlify/functions/sendRecipientDetails", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ sender:yourName, recipient:recipientName, message:customMessage })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sender: yourName, recipient: recipientName, message: customMessage })
       }).catch(error => console.error("Error sending recipient details:", error));
 
       let encodedMessage = encodeURIComponent(customMessage);
