@@ -1,100 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
-    
-    <title>Recipient Details</title>
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJWLXHTLJL"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SJWLXHTLJL');
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipient Details - AR Love Letters</title>
+  <style>
+    :root {
+      --color-bg: #fdf6f0;
+      --color-text: #333;
+      --color-primary: #ff6f61;
+      --color-primary-hover: #e85c50;
+      --color-card: #ffe8e5;
+      --color-input-bg: #fff;
+    }
 
-    <!-- Firebase CDN -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      transition: background 0.3s, color 0.3s;
+    }
 
-    <script type="module">
-        // ✅ Firebase Authentication Check
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+    .container {
+      width: 95%;
+      max-width: 550px;
+      background: var(--color-card);
+      padding: 35px 30px;
+      border-radius: 15px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+      text-align: left;
+      position: relative;
+      animation: fadeIn 1s ease-in;
+    }
 
-        async function checkAuth() {
-            const response = await fetch("/.netlify/functions/firebaseConfig");
-            const { firebaseConfig } = await response.json();
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+    .container h1 {
+      font-size:28px;
+      margin-bottom:15px;
+      text-align:center;
+    }
 
-            onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    window.location.href = "login.html"; // 🚨 Redirect to login if not authenticated
-                }
-            });
-        }
-        checkAuth();
-    </script>
+    .container p.love-text {
+      font-size:16px;
+      margin-bottom:20px;
+      text-align:center;
+    }
+
+    form label {
+      display:block;
+      font-weight:bold;
+      font-size:16px;
+      margin-bottom:6px;
+    }
+
+    input[type="text"], textarea {
+      width:100%;
+      padding:12px;
+      border:2px solid var(--color-primary);
+      border-radius:6px;
+      font-size:16px;
+      margin-bottom:15px;
+      background: var(--color-input-bg);
+      color: var(--color-text);
+      resize:none;
+      transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--color-primary-hover);
+      outline:none;
+    }
+
+    .get-started {
+      display:block;
+      width:100%;
+      padding:15px;
+      background: var(--color-primary);
+      color:white;
+      font-size:18px;
+      font-weight:bold;
+      border:none;
+      border-radius:50px;
+      cursor:pointer;
+      margin-top:20px;
+      text-transform:uppercase;
+      transition: all 0.3s ease-in-out;
+      text-align:center;
+      animation: pulse 1.5s infinite;
+    }
+
+    .get-started:hover {
+      background: var(--color-primary-hover);
+      transform: scale(1.05);
+      box-shadow:0 0 15px rgba(255, 111, 97, 0.7);
+    }
+
+    .required-star { color:red; }
+
+    @media(max-width:480px){
+      .container { width:90%; padding:25px; }
+      .container h1 { font-size:24px; }
+      input, textarea { font-size:15px; }
+      .get-started { font-size:16px; padding:12px; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity:0; transform:translateY(-20px); }
+      100% { opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform:scale(1); }
+      50% { transform:scale(1.05); }
+      100% { transform:scale(1); }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="recipient-box">
-            <h1>💖 Customize Your Love Letter 💖</h1>
-            <p class="love-text">
-                Fill in the details below to create a special love letter for your soulmate.
-            </p>
+  <div class="container">
+    <h1>💖 Customize Your Love Letter 💖</h1>
+    <p class="love-text">Fill in the details below to create a special love letter for your soulmate.</p>
 
-            <form id="recipientForm">
-                <label for="yourName">Your Name: <span class="required-star">*</span></label>
-                <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+    <form id="recipientForm">
+      <label for="yourName">Your Name: <span class="required-star">*</span></label>
+      <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
 
-                <label for="recipientName">Recipient's Name:</label>
-                <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
+      <label for="recipientName">Recipient's Name:</label>
+      <input type="text" id="recipientName" name="recipientName" placeholder="Enter recipient's name">
 
-                <label for="customMessage">Custom Message (Optional):</label>
-                <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
+      <label for="customMessage">Custom Message (Optional):</label>
+      <textarea id="customMessage" name="customMessage" placeholder="Write a personal love message..."></textarea>
 
-                <button type="submit" class="get-started">Next</button>
-            </form>
-        </div>
-    </div>
+      <button type="submit" class="get-started">Next</button>
+    </form>
+  </div>
 
-    <script>
-        document.getElementById("recipientForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 
-            let yourName = document.getElementById("yourName").value.trim();
-            let recipientName = document.getElementById("recipientName").value.trim();
-            let customMessage = document.getElementById("customMessage").value.trim();
+  <script>
+    document.getElementById("recipientForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      let yourName = document.getElementById("yourName").value.trim();
+      let recipientName = document.getElementById("recipientName").value.trim();
+      let customMessage = document.getElementById("customMessage").value.trim();
 
-            if (!yourName.replace(/\s/g, '').length) {
-                alert("Please enter your name. This field is required!");
-                return;
-            }
+      if(!yourName.replace(/\s/g,'')) { alert("Please enter your name. This field is required!"); return; }
+      if(customMessage.length>300){ alert("Custom message too long! Keep under 300 chars."); return; }
 
-            if (customMessage.length > 300) {
-                alert("Your custom message is too long! Please keep it under 300 characters.");
-                return;
-            }
+      localStorage.setItem("yourName", yourName);
+      localStorage.setItem("recipientName", recipientName);
+      localStorage.setItem("customMessage", customMessage);
 
-            localStorage.setItem("yourName", yourName);
-            localStorage.setItem("recipientName", recipientName);
-            localStorage.setItem("customMessage", customMessage);
+      fetch("/.netlify/functions/sendRecipientDetails", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ sender:yourName, recipient:recipientName, message:customMessage })
+      }).catch(error => console.error("Error sending recipient details:", error));
 
-            fetch("/.netlify/functions/sendRecipientDetails", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sender: yourName, recipient: recipientName, message: customMessage })
-            }).catch(error => console.error("Error sending recipient details:", error));
-
-            let encodedMessage = encodeURIComponent(customMessage);
-            window.location.href = `confirmation.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
-        });
-    </script>
+      let encodedMessage = encodeURIComponent(customMessage);
+      window.location.href = `confirmation.html?sender=${encodeURIComponent(yourName)}&recipient=${encodeURIComponent(recipientName)}&message=${encodedMessage}`;
+    });
+  </script>
 </body>
 </html>
