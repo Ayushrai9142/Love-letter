@@ -1,214 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik" />
+  <meta
+    name="google-site-verification"
+    content="jnphjQTW-i8neDl8TrT6alPY0zyY1kQ2sZLq9L3TSik"
+  />
 
-    <title>Love Letter Service</title>
+  <title>Love Letter Service</title>
 
-    <!-- Fonts & Styles -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
 
-    <style>
-        :root {
-            --color-bg: #fdf6f0;
-            --color-text: #333;
-            --color-primary: #ff6f61;
-            --color-primary-hover: #e85c50;
-            --color-card: #ffe8e5;
-            --color-footer: #ffe0de;
-            --color-hero: linear-gradient(135deg, #ffe0e0, #ffdede);
-        }
+  <style>
+    :root {
+      --color-bg: #fdf6f0;
+      --color-text: #333;
+      --color-primary: #ff6f61;
+      --color-primary-hover: #e85c50;
+      --color-card: #ffe8e5;
+      --color-footer: #ffe0de;
+      --color-hero: linear-gradient(135deg, #ffe0e0, #ffdede);
+    }
 
-        [data-theme="dark"] {
-            --color-bg: #1c1c1c;
-            --color-text: #f1f1f1;
-            --color-primary: #ff8a80;
-            --color-primary-hover: #ff5252;
-            --color-card: #2a2a2a;
-            --color-footer: #1f1f1f;
-            --color-hero: linear-gradient(135deg, #333, #444);
-        }
+    [data-theme="dark"] {
+      --color-bg: #1c1c1c;
+      --color-text: #f1f1f1;
+      --color-primary: #ff8a80;
+      --color-primary-hover: #ff5252;
+      --color-card: #2a2a2a;
+      --color-footer: #1f1f1f;
+      --color-hero: linear-gradient(135deg, #333, #444);
+    }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
-            transition: background 0.3s, color 0.3s;
-            scroll-behavior: smooth;
-        }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+      scroll-behavior: smooth;
+    }
 
-        header {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 30px;
-            background:#fff;
-            box-shadow:0 3px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top:0;
-            z-index:100;
-            transition: background 0.3s, color 0.3s;
-        }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background 0.3s, color 0.3s;
+    }
 
-        [data-theme="dark"] header { background:#222; }
+    [data-theme="dark"] header {
+      background: #222;
+    }
 
-        header h1 { font-size:28px; color:var(--color-primary); }
+    header h1 {
+      font-size: 28px;
+      color: var(--color-primary);
+    }
 
-        #logoutButton {
-            padding:8px 16px;
-            background: var(--color-primary);
-            color:#fff;
-            border:none;
-            border-radius:6px;
-            cursor:pointer;
-            transition: background 0.3s;
-            margin-left:10px;
-        }
+    #logoutButton {
+      padding: 8px 16px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-left: 10px;
+    }
 
-        #logoutButton:hover { background: var(--color-primary-hover); }
+    #logoutButton:hover {
+      background: var(--color-primary-hover);
+    }
 
-        #theme-toggle {
-            padding:6px 12px;
-            border:none;
-            border-radius:6px;
-            background: var(--color-primary);
-            color:#fff;
-            cursor:pointer;
-            font-weight:600;
-            transition: transform 0.2s, background 0.3s;
-        }
-        #theme-toggle:hover { transform: scale(1.05); background: var(--color-primary-hover); }
+    #theme-toggle {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: var(--color-primary);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s, background 0.3s;
+    }
 
-        .hero {
-            text-align:center;
-            padding:80px 20px;
-            background: var(--color-hero);
-            border-bottom-left-radius:50% 10%;
-            border-bottom-right-radius:50% 10%;
-            transition: background 0.3s;
-        }
+    #theme-toggle:hover {
+      transform: scale(1.05);
+      background: var(--color-primary-hover);
+    }
 
-        .hero h2 { font-size:40px; margin-bottom:20px; }
-        .hero p { font-size:18px; margin-bottom:15px; }
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: var(--color-hero);
+      border-bottom-left-radius: 50% 10%;
+      border-bottom-right-radius: 50% 10%;
+      transition: background 0.3s;
+    }
 
-        .get-started {
-            padding:14px 30px;
-            background: var(--color-primary);
-            color:#fff;
-            border:none;
-            border-radius:10px;
-            font-weight:500;
-            cursor:pointer;
-            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-        }
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
 
-        .get-started:hover {
-            background: var(--color-primary-hover);
-            transform: scale(1.05);
-            box-shadow:0 8px 20px rgba(0,0,0,0.2);
-        }
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
 
-        .content {
-            max-width:900px;
-            margin:50px auto;
-            padding:20px;
-        }
+    .get-started {
+      padding: 14px 30px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    }
 
-        .content p { margin-bottom:20px; }
+    .get-started:hover {
+      background: var(--color-primary-hover);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        footer {
-            text-align:center;
-            padding:25px 20px;
-            background: var(--color-footer);
-            margin-top:40px;
-            font-size:16px;
-            transition: background 0.3s;
-        }
+    .content {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
 
-        [data-theme="dark"] footer { background:#1f1f1f; color:#f1f1f1; }
-    </style>
+    .content p {
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      background: var(--color-footer);
+      margin-top: 40px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    [data-theme="dark"] footer {
+      background: #1f1f1f;
+      color: #f1f1f1;
+    }
+
+    /* ✅ Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 22px;
+        line-height: 1.4;
+      }
+
+      .hero {
+        padding: 60px 15px;
+      }
+
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .content {
+        margin: 30px 10px;
+        padding: 10px;
+      }
+
+      .get-started {
+        padding: 12px 20px;
+        font-size: 15px;
+      }
+
+      footer {
+        font-size: 14px;
+      }
+
+      #theme-toggle,
+      #logoutButton {
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>💌 A Special Letter for Your Loved One 💌</h1>
+    <div>
+      <button id="theme-toggle">Light Mode</button>
+      <button id="logoutButton">Logout</button>
+    </div>
+  </header>
 
-    <header>
-        <h1>💌 A Special Letter for Your Loved One 💌</h1>
-        <div>
-            <button id="theme-toggle">Light Mode</button>
-            <button id="logoutButton">Logout</button>
-        </div>
-    </header>
+  <section class="hero">
+    <h2>Express Your Love</h2>
+    <p>Can you define love in your own words? Express it freely and make it eternal.</p>
+    <p>Let your heart speak the language of emotions.</p>
+    <button class="get-started" onclick="location.href='recipient.html'">
+      Get Started
+    </button>
+  </section>
 
-    <section class="hero">
-        <h2>Express Your Love</h2>
-        <p>Can you define love in your own words? Express it freely and make it eternal.</p>
-        <p>Let your heart speak the language of emotions.</p>
-        <button class="get-started" onclick="location.href='recipient.html'">Get Started</button>
-    </section>
+  <section class="content">
+    <p>
+      Love is the silent whisper in the wind, the warmth of the morning sun, and
+      the twinkle in the stars at night.
+    </p>
+    <p>
+      Expressing love is an art. We help you create the perfect love letter for
+      your special one.
+    </p>
+    <p>
+      Every word you choose, every emotion you express, will be woven into a
+      heartfelt message that will touch the soul of your loved one.
+    </p>
+    <p>
+      Whether it’s a simple "I love you" or a deeply emotional confession, we
+      ensure your words resonate with their heart.
+    </p>
+    <p>
+      Let your heart speak through words, and make your loved one feel truly
+      special.
+    </p>
+    <p>Your love story deserves to be written beautifully.</p>
+    <p>
+      Start your journey now and create a timeless message that they will
+      cherish forever.
+    </p>
+  </section>
 
-    <section class="content">
-        <p>Love is the silent whisper in the wind, the warmth of the morning sun, and the twinkle in the stars at night.</p>
-        <p>Expressing love is an art. We help you create the perfect love letter for your special one.</p>
-        <p>Every word you choose, every emotion you express, will be woven into a heartfelt message that will touch the soul of your loved one.</p>
-        <p>Whether it’s a simple "I love you" or a deeply emotional confession, we ensure your words resonate with their heart.</p>
-        <p>Let your heart speak through words, and make your loved one feel truly special.</p>
-        <p>Your love story deserves to be written beautifully.</p>
-        <p>Start your journey now and create a timeless message that they will cherish forever.</p>
-    </section>
+  <footer>&copy; 2025 AR Love Letters. All rights reserved.</footer>
 
-    <footer>
-        &copy; 2025 AR Love Letters. All rights reserved.
-    </footer>
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
 
-    <!-- Firebase CDN -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"></script>
+  <script>
+    const themeToggle = document.getElementById("theme-toggle");
+    const logoutButton = document.getElementById("logoutButton");
 
-    <!-- Dark Mode & Logout Scripts -->
-    <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const logoutButton = document.getElementById('logoutButton');
+    if (!localStorage.getItem("theme")) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+      themeToggle.textContent = "Light Mode";
+    } else {
+      const savedTheme = localStorage.getItem("theme");
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      themeToggle.textContent =
+        savedTheme === "dark" ? "Light Mode" : "Dark Mode";
+    }
 
-        // ✅ Default dark mode
-        if(!localStorage.getItem('theme')){
-            document.documentElement.setAttribute('data-theme','dark');
-            localStorage.setItem('theme','dark');
-            themeToggle.textContent = "Light Mode";
-        } else {
-            const savedTheme = localStorage.getItem('theme');
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeToggle.textContent = savedTheme === 'dark' ? "Light Mode" : "Dark Mode";
-        }
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      if (currentTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("theme", "light");
+        themeToggle.textContent = "Dark Mode";
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+        themeToggle.textContent = "Light Mode";
+      }
+    });
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if(currentTheme === 'dark'){
-                document.documentElement.setAttribute('data-theme','light');
-                localStorage.setItem('theme','light');
-                themeToggle.textContent = "Dark Mode";
-            } else {
-                document.documentElement.setAttribute('data-theme','dark');
-                localStorage.setItem('theme','dark');
-                themeToggle.textContent = "Light Mode";
-            }
-        });
+    logoutButton.addEventListener("click", () => {
+      sessionStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    });
 
-        // ✅ Logout functionality
-        logoutButton.addEventListener('click', () => {
-            sessionStorage.removeItem('loggedIn');
-            window.location.href = 'login.html';
-        });
-
-        // ✅ Redirect to login if not logged in
-        if(!sessionStorage.getItem('loggedIn')){
-            window.location.href = 'login.html';
-        }
-    </script>
+    if (!sessionStorage.getItem("loggedIn")) {
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
 </html>
